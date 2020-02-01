@@ -24,6 +24,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Global/Scripts/MenuOptionsBase.gd"
 }, {
+"base": "Position2D",
+"class": "PointSide",
+"language": "GDScript",
+"path": "res://Scenes/SpawnPoints/Script/PointSide.gd"
+}, {
+"base": "Position2D",
+"class": "PointTop",
+"language": "GDScript",
+"path": "res://Scenes/SpawnPoints/Script/PointTop.gd"
+}, {
 "base": "Node",
 "class": "TileBase",
 "language": "GDScript",
@@ -33,6 +43,8 @@ _global_script_class_icons={
 "AudioStreamBase": "",
 "MenuBase": "",
 "MenuOptionsBase": "",
+"PointSide": "",
+"PointTop": "",
 "TileBase": ""
 }
 
