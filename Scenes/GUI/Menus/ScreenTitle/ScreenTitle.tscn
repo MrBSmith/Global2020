@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scenes/GUI/Menus/MenuBase.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Global/Fonts/BoldCapsPixel.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/GUI/Menus/ScreenTitle/Play.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/GUI/Menus/ScreenTitle/Options.gd" type="Script" id=5]
+[ext_resource path="res://Scenes/GUI/Menus/ScreenTitle/Leave.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="ScreenTitle" instance=ExtResource( 1 )]
+margin_left = 0.475647
+margin_top = 1.0
+margin_right = 0.475647
+margin_bottom = 1.0
+
+[node name="MenuBackground" type="ColorRect" parent="." index="0"]
+margin_top = -1.3176
+margin_right = 112.0
+margin_bottom = 110.682
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" parent="." index="1"]
+margin_left = 28.4925
+margin_top = 15.2773
+margin_right = 84.4925
+margin_bottom = 101.277
+mouse_default_cursor_shape = 2
+
+[node name="V_OptContainer" parent="HBoxContainer" index="0"]
+margin_left = 0.0
+margin_right = 56.0
+margin_bottom = 86.0
+
+[node name="Play" type="Label" parent="HBoxContainer/V_OptContainer" index="0"]
+margin_right = 56.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 1 )
+text = "Play"
+align = 1
+valign = 1
+script = ExtResource( 3 )
+_clickable = true
+
+[node name="Options" type="Label" parent="HBoxContainer/V_OptContainer" index="1"]
+margin_top = 30.0
+margin_right = 56.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 2 )
+text = "Options"
+align = 1
+valign = 1
+script = ExtResource( 5 )
+
+[node name="Quit" type="Label" parent="HBoxContainer/V_OptContainer" index="2"]
+margin_top = 60.0
+margin_right = 56.0
+margin_bottom = 86.0
+custom_fonts/font = SubResource( 3 )
+text = "Leave"
+align = 1
+valign = 1
+script = ExtResource( 6 )
+_clickable = true
