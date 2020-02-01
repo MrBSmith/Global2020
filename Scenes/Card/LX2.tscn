@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/SpawnPoints/PointTop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/SpawnPoints/PointSide.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Card/Tile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Base_Classes/Card_Base.gd" type="Script" id=4]
+
+[node name="LX2" type="Node2D"]
+script = ExtResource( 4 )
+max_door = 3
+
+[node name="Tile" parent="." instance=ExtResource( 3 )]
+
+[node name="PointSide" parent="Tile" instance=ExtResource( 2 )]
+position = Vector2( -7, 0 )
+
+[node name="PointTop" parent="Tile" instance=ExtResource( 1 )]
+position = Vector2( 0, 7 )
+
+[node name="ColorRect" type="ColorRect" parent="Tile"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+color = Color( 1, 1, 1, 0.0980392 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tile2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -16 )
+
+[node name="PointSide" parent="Tile2" instance=ExtResource( 2 )]
+position = Vector2( -7, 0 )
+
+[node name="PointSide2" parent="Tile2" instance=ExtResource( 2 )]
+position = Vector2( 7, 0 )
+
+[node name="PointTop" parent="Tile2" instance=ExtResource( 1 )]
+position = Vector2( 0, -7 )
+
+[node name="ColorRect" type="ColorRect" parent="Tile2"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+color = Color( 1, 1, 1, 0.0980392 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tile3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 16, 0 )
+
+[node name="PointTop" parent="Tile3" instance=ExtResource( 1 )]
+position = Vector2( 0, -7 )
+
+[node name="PointTop2" parent="Tile3" instance=ExtResource( 1 )]
+position = Vector2( 0, 7 )
+
+[node name="ColorRect" type="ColorRect" parent="Tile3"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+color = Color( 1, 1, 1, 0.0980392 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tile4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 32, 0 )
+
+[node name="PointSide2" parent="Tile4" instance=ExtResource( 2 )]
+position = Vector2( 7, 0 )
+
+[node name="PointTop" parent="Tile4" instance=ExtResource( 1 )]
+position = Vector2( 0, -7 )
+
+[node name="PointTop2" parent="Tile4" instance=ExtResource( 1 )]
+position = Vector2( 0, 7 )
+
+[node name="ColorRect" type="ColorRect" parent="Tile4"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+color = Color( 1, 1, 1, 0.0980392 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
