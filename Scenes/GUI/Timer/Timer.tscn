@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Global/Fonts/BoldCapsPixel.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scenes/GUI/Timer/Timer.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/GUI/Timer/NTimer.gd" type="Script" id=3]
+
+[node name="NTimer" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="LabelTimer" type="RichTextLabel" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 1.0
+margin_top = -7.0
+margin_right = 44.0
+margin_bottom = 18.0
+custom_fonts/mono_font = ExtResource( 1 )
+custom_fonts/bold_italics_font = ExtResource( 1 )
+custom_fonts/italics_font = ExtResource( 1 )
+custom_fonts/bold_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 1 )
+text = "00:00"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 20.0
+one_shot = true
+script = ExtResource( 2 )

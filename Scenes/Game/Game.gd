@@ -1,9 +1,10 @@
 extends Node2D
 
+onready var node_GUI = get_node("GUI")
 onready var tiles_node = get_node("Tiles")
 onready var void_node = get_node("Tiles/Void")
 onready var tile_node_array = tiles_node.get_children()
-
+onready var node_GUI_array = node_GUI.get_children()
 onready var music_node = get_node("Music")
 
 #8: HARD / 7: MEDIUM / 6: EASY
@@ -18,5 +19,9 @@ func _ready():
 	for child in tile_node_array:
 		if(child.has_method("on_ready")):
 			child.on_ready()
-	
+
+	for child in node_GUI_array:
+		if(child.has_method("on_ready")):
+			child.on_ready()
+
 	music_node.launch_every_stream()

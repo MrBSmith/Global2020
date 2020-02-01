@@ -17,7 +17,8 @@ var screen_width : float = ProjectSettings.get("display/window/size/width")
 var screen_height : float =  ProjectSettings.get("display/window/size/height")
 
 func _ready():
-	pass
+	self.position.x = screen_width/2-4
+	self.position.y = screen_height/2
 
 func move():
 	
