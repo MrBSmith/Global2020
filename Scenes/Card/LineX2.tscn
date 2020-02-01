@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/SpawnPoints/PointTop.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/SpawnPoints/PointSide.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Card/Tile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Base_Classes/Card_Base.gd" type="Script" id=4]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 31, 31 )
+script = ExtResource( 4 )
+
+[node name="Tile" parent="." instance=ExtResource( 3 )]
+
+[node name="PointSide" parent="Tile" instance=ExtResource( 2 )]
+position = Vector2( -7, 0 )
+
+[node name="PointSide2" parent="Tile" instance=ExtResource( 2 )]
+position = Vector2( 7, 0 )
+
+[node name="PointTop" parent="Tile" instance=ExtResource( 1 )]
+position = Vector2( 0, 7 )
+
+[node name="Tile2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -16 )
+
+[node name="PointSide" parent="Tile2" instance=ExtResource( 2 )]
+position = Vector2( -7, 0 )
+
+[node name="PointSide2" parent="Tile2" instance=ExtResource( 2 )]
+position = Vector2( 7, 0 )
+
+[node name="PointTop" parent="Tile2" instance=ExtResource( 1 )]
+position = Vector2( 0, -7 )

@@ -1,13 +1,13 @@
 # Global2020
 #### Added Discord support ####
-# PLEASE CHECK https://guides.github.com/features/mastering-markdown/ TO MASTER GITHUB MARKDOWN BEFORE EDITING AN ISSUE OR README TEXT 
+# PLEASE CHECK https://guides.github.com/features/mastering-markdown/ TO MASTER GITHUB MARKDOWN BEFORE EDITING AN ISSUE OR README TEXT
 
 ## ----> QUALITY EXPECTED <----
 
 * Type every variables when it doesn't needs dynamic typing.
 * Use setget on externaly used variables.
 
-* Comment every method you create: juste sumup its behaviour, what type of arguments it expects and what it returns.
+* Comment every method you create: just sumup its behaviour, what type of arguments it expects and what it returns.
 
 * Encapsulate as much as you can: each Node should have a single purpose.
 * Children contains only logic or Data, and parents only manage their children.
@@ -39,7 +39,7 @@
 * method_name(): snake_case, recognizable with the parenthesis
 * _method_name(): method private to a class
 
-* NomDeSignal: PascalCase, usally a verb a past tense (ex: ButtonTriggered)
+* SignalName: PascalCase, usally a verb a past tense (ex: ButtonTriggered)
 * on_NomDeSignal(): snake_case with the name of the signal at the end (ex: on_ButtonTriggered)
 * _argument_name: argument not used in the method (frequently used when the method is declared as abstract in the parent class)
 
