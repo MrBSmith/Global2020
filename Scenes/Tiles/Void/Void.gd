@@ -14,5 +14,5 @@ func fill_with_void():
 	for i in range(1, game_difficulty):
 		for j in range(1, game_difficulty):
 			current_tile_void = scene_tile.instance()
-			current_tile_void.set_position(Vector2(i*16-8, j*16-8))
+			current_tile_void.set_position(Vector2(32+i*16, j*16-8))
 			add_child(current_tile_void)
