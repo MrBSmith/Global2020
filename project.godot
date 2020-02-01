@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "AudioStreamPlayer",
+"class": "AudioStreamBase",
+"language": "GDScript",
+"path": "res://BaseClasses/AudioStreamBase.gd"
+}, {
 "base": "Control",
 "class": "MenuBase",
 "language": "GDScript",
@@ -22,9 +27,10 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "TileBase",
 "language": "GDScript",
-"path": "res://Tile.gd"
+"path": "res://BaseClasses/TileBase.gd"
 } ]
 _global_script_class_icons={
+"AudioStreamBase": "",
 "MenuBase": "",
 "MenuOptionsBase": "",
 "TileBase": ""
