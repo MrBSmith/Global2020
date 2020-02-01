@@ -19,5 +19,4 @@ func _ready():
 		if(child.has_method("on_ready")):
 			child.on_ready()
 	
-	music_node.play_music("Base")
-	music_node.play_music("Normal")
+	music_node.launch_every_stream()

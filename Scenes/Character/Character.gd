@@ -9,8 +9,8 @@ export var friction : float = 0.08
 export var acceleration : float = 0.08
 export var gayness : int
 
-var velocity = Vector2.ZERO
-var direction = Vector2()
+var velocity := Vector2.ZERO
+var direction := Vector2()
 var input_key : String
 
 var screen_width : float = ProjectSettings.get("display/window/size/width")
