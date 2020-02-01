@@ -19,15 +19,10 @@ size = 32
 font_data = ExtResource( 2 )
 
 [node name="ScreenTitle" instance=ExtResource( 1 )]
-margin_left = 0.475647
-margin_top = 1.0
-margin_right = 0.475647
-margin_bottom = 1.0
 
 [node name="MenuBackground" type="ColorRect" parent="." index="0"]
-margin_top = -1.3176
 margin_right = 112.0
-margin_bottom = 110.682
+margin_bottom = 112.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_lock_": true,
@@ -35,10 +30,14 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" parent="." index="1"]
-margin_left = 28.4925
-margin_top = 15.2773
-margin_right = 84.4925
-margin_bottom = 101.277
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -28.0
+margin_top = -43.0
+margin_right = 28.0
+margin_bottom = 43.0
 mouse_default_cursor_shape = 2
 
 [node name="V_OptContainer" parent="HBoxContainer" index="0"]
