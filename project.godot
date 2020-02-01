@@ -50,7 +50,8 @@ _global_script_class_icons={
 "MenuOptionsBase": "",
 "PointSide": "",
 "PointTop": "",
-"TileBase": ""
+"TileBase": "",
+"TimerBase": ""
 }
 
 [application]
