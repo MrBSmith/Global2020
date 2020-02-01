@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var scene_gameover = "res://Scenes/GUI/Menus/LoseMenu/GameOver.tscn"
+
 onready var children_array = get_children()
 onready var node_LabelTimer = get_node("LabelTimer")
 onready var node_Timer = get_node("Timer")
@@ -14,7 +16,7 @@ func on_ready():
 	node_Timer.start_timer()
 
 func on_timer_started():
-	print("Timer timeout!")
+	print("Timer started!")
 
 func on_timer_timeout():
-	print("Timer timeout!")
+	get_tree().change_scene(scene_gameover)

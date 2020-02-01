@@ -11,5 +11,3 @@ func on_ready():
 func start_timer():
 	start()
 	emit_signal("start_timer")
-
-
