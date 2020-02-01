@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "MenuOptionsBase",
 "language": "GDScript",
 "path": "res://Global/Scripts/MenuOptionsBase.gd"
+}, {
+"base": "Node",
+"class": "TileBase",
+"language": "GDScript",
+"path": "res://Tile.gd"
 } ]
 _global_script_class_icons={
 "MenuBase": "",
-"MenuOptionsBase": ""
+"MenuOptionsBase": "",
+"TileBase": ""
 }
 
 [application]

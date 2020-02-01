@@ -13,6 +13,8 @@ var velocity = Vector2.ZERO
 var direction = Vector2()
 var input_key : String
 
+var screen_width : float = ProjectSettings.get("display/window/size/width")
+var screen_height : float =  ProjectSettings.get("display/window/size/height")
 
 func _ready():
 	pass
@@ -43,13 +45,13 @@ func get_input():
 	
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
-		
+			
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
-		
+			
 	if Input.is_action_pressed("ui_down"):
 		direction.y += 1
-		
+			
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
 		
