@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name card_base
+
 # ---- VARIABLES ----
 
 var rng = RandomNumberGenerator.new()
@@ -24,14 +26,14 @@ var wall_count
 func _ready():
 	rng.randomize()
 	door_count = rng.randi_range(min_door, max_door)
-	print("door_count : " + str(door_count))
+	#print("door_count : " + str(door_count))
 	
 	# Check how many sides the card has to know how many walls it has
 	side_count = 0
 	count_sides(get_node("."))
 	wall_count = side_count - door_count
-	print("side_count : " + str(side_count))
-	print("wall_count : " + str(wall_count))
+#	print("side_count : " + str(side_count))
+#	print("wall_count : " + str(wall_count))
 	
 	# Place walls and doors
 	place_all_walls(get_node("."))
@@ -86,7 +88,7 @@ func place_all_walls(Node):
 			rng.randomize()
 			var rand_wall = rng.randi_range(1, remaining_walls)
 			
-			print("rand_wall : " + str(rand_wall))
+#			print("rand_wall : " + str(rand_wall))
 			
 			var is_door = false
 			
@@ -105,7 +107,7 @@ func place_all_walls(Node):
 			
 			# if the current node is from PointTop class
 			if current_node is PointTop:
-				print("Top")
+#				print("Top")
 				
 				# spawns a horizontal wall
 				var side
@@ -122,7 +124,7 @@ func place_all_walls(Node):
 			
 			# else, if the node is from PointSide class
 			elif current_node is PointSide:
-				print("side")
+#				print("side")
 				
 				# spawns a vertical wall
 				var side

@@ -39,11 +39,14 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://BaseClasses/TileBase.gd"
 }, {
+<<<<<<< HEAD
 "base": "Timer",
 "class": "TimerBase",
 "language": "GDScript",
 "path": "res://BaseClasses/TimerBase.gd"
 }, {
+=======
+>>>>>>> Add the cards in the hand
 "base": "Node2D",
 "class": "card_base",
 "language": "GDScript",
@@ -56,7 +59,10 @@ _global_script_class_icons={
 "PointSide": "",
 "PointTop": "",
 "TileBase": "",
+<<<<<<< HEAD
 "TimerBase": "",
+=======
+>>>>>>> Add the cards in the hand
 "card_base": ""
 }
 
