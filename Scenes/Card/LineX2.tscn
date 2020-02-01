@@ -20,6 +20,15 @@ position = Vector2( 7, 0 )
 [node name="PointTop" parent="Tile" instance=ExtResource( 1 )]
 position = Vector2( 0, 7 )
 
+[node name="ColorRect" type="ColorRect" parent="Tile"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Tile2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, -16 )
 
@@ -31,3 +40,12 @@ position = Vector2( 7, 0 )
 
 [node name="PointTop" parent="Tile2" instance=ExtResource( 1 )]
 position = Vector2( 0, -7 )
+
+[node name="ColorRect" type="ColorRect" parent="Tile2"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
