@@ -1,4 +1,5 @@
 extends Node2D
+class_name Card
 
 # ---- VARIABLES ----
 
@@ -18,20 +19,23 @@ var door_count
 # the number of walls the room will have
 var wall_count
 
+var remaining_doors
+var remaining_walls
+
 
 # ---- ONREADY ----
 
 func _ready():
 	rng.randomize()
 	door_count = rng.randi_range(min_door, max_door)
-	print("door_count : " + str(door_count))
 	
 	# Check how many sides the card has to know how many walls it has
 	side_count = 0
 	count_sides(get_node("."))
 	wall_count = side_count - door_count
-	print("side_count : " + str(side_count))
-	print("wall_count : " + str(wall_count))
+	
+	remaining_doors = door_count
+	remaining_walls = wall_count
 	
 	# Place walls and doors
 	place_all_walls(get_node("."))
@@ -49,16 +53,36 @@ func count_sides(Node):
 	for current_node in Node.get_children():
 		# if the current children node, named N, has children nodes
 		if current_node.get_child_count() > 0:
-#			print("["+current_node.get_name()+"]")
 			# calls back the function to get the children node of the current node
 			count_sides(current_node)
 		# The current node is the last children node
 		else:
-#			print("- "+current_node.get_name())
 			
 			# if the current node is a side
 			if(current_node is PointTop || current_node is PointSide):
 				side_count += 1
+
+
+# funciton : generate_door
+# parameters : None
+# returns : bool
+# description : generate a number depending of the remaining sides, return true if it'll be a door
+
+func generate_door():
+	# Get a random number between the remaining sides
+	rng.randomize()
+	var rand_wall = rng.randi_range(1, remaining_walls)
+	
+	# if rand_wall is below the number of remaining doors, that means we still have doors to place
+	if remaining_doors >= rand_wall:
+		# a door has been placed, so remove it from the remaining_doors count
+		remaining_doors -= 1
+		return true
+	# either there is not enough door to put one, or the random chose to put a wall in this position
+	else:
+		# remove a wall from the count
+		remaining_walls -= 1
+		return false
 
 
 # function : place_all_walls
@@ -68,49 +92,23 @@ func count_sides(Node):
 
 func place_all_walls(Node):
 	
-	var remaining_doors = door_count
-	var remaining_walls = wall_count
-	
 	# For each nodes in the given node
 	for current_node in Node.get_children():
 		# if the current children node, named N, has children nodes
 		if current_node.get_child_count() > 0:
-#			print("["+current_node.get_name()+"]")
 			# calls back the function to get the children node of the current node
 			place_all_walls(current_node)
+			
 		# The current node is the last children node
 		else:
-#			print("- "+current_node.get_name())
-			
-			# Get a random number between the remaining sides
-			rng.randomize()
-			var rand_wall = rng.randi_range(1, remaining_walls)
-			
-			print("rand_wall : " + str(rand_wall))
-			
-			var is_door = false
-			
-			# if rand_wall is below the number of remaining doors, that means we still have doors to place
-			if remaining_doors >= rand_wall:
-				# it's a door, set the bool to true
-				is_door = true
-				# a door has been placed, so remove it from the remaining_doors count
-				remaining_doors -= 1
-			# either there is not enough door to put one, or the random chose to put a wall in this position
-			else:
-				# remove a wall from the count
-				remaining_walls -= 1
-			
-			
 			
 			# if the current node is from PointTop class
 			if current_node is PointTop:
-				print("Top")
 				
 				# spawns a horizontal wall
 				var side
 				# if it's a door
-				if is_door:
+				if generate_door():
 					side = load(door_node_path).instance()
 				else:
 					side = load(wall_node_path).instance()
@@ -122,12 +120,11 @@ func place_all_walls(Node):
 			
 			# else, if the node is from PointSide class
 			elif current_node is PointSide:
-				print("side")
 				
 				# spawns a vertical wall
 				var side
 				# if it's a door
-				if is_door:
+				if generate_door():
 					side = load(door_node_path).instance()
 				else:
 					side = load(wall_node_path).instance()
