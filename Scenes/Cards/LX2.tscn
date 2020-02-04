@@ -15,17 +15,6 @@ position = Vector2( -7, 0 )
 [node name="PointTop" parent="Tile" index="4" instance=ExtResource( 1 )]
 position = Vector2( 0, 7 )
 
-[node name="ColorRect" type="ColorRect" parent="Tile" index="5"]
-margin_left = -8.0
-margin_top = -8.0
-margin_right = 8.0
-margin_bottom = 8.0
-color = Color( 1, 1, 1, 0.0980392 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
 [node name="Tile2" parent="." index="1" instance=ExtResource( 3 )]
 position = Vector2( 0, -16 )
 
@@ -38,16 +27,6 @@ position = Vector2( 7, 0 )
 [node name="PointTop" parent="Tile2" index="5" instance=ExtResource( 1 )]
 position = Vector2( 0, -7 )
 
-[node name="ColorRect" type="ColorRect" parent="Tile2" index="6"]
-margin_left = -8.0
-margin_top = -8.0
-margin_right = 8.0
-margin_bottom = 8.0
-color = Color( 1, 1, 1, 0.0980392 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Tile3" parent="." index="2" instance=ExtResource( 3 )]
 position = Vector2( 16, 0 )
 
@@ -56,16 +35,6 @@ position = Vector2( 0, -7 )
 
 [node name="PointTop2" parent="Tile3" index="4" instance=ExtResource( 1 )]
 position = Vector2( 0, 7 )
-
-[node name="ColorRect" type="ColorRect" parent="Tile3" index="5"]
-margin_left = -8.0
-margin_top = -8.0
-margin_right = 8.0
-margin_bottom = 8.0
-color = Color( 1, 1, 1, 0.0980392 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Tile4" parent="." index="3" instance=ExtResource( 3 )]
 position = Vector2( 32, 0 )
@@ -78,13 +47,3 @@ position = Vector2( 0, -7 )
 
 [node name="PointTop2" parent="Tile4" index="5" instance=ExtResource( 1 )]
 position = Vector2( 0, 7 )
-
-[node name="ColorRect" type="ColorRect" parent="Tile4" index="6"]
-margin_left = -8.0
-margin_top = -8.0
-margin_right = 8.0
-margin_bottom = 8.0
-color = Color( 1, 1, 1, 0.0980392 )
-__meta__ = {
-"_edit_use_anchors_": false
-}

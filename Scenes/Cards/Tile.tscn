@@ -15,7 +15,7 @@ texture = ExtResource( 3 )
 [node name="DragCollision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TileColor" type="ColorRect" parent="."]
 margin_left = -8.0
 margin_top = -8.0
 margin_right = 8.0
@@ -25,3 +25,5 @@ color = Color( 1, 1, 1, 0.501961 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="mouse_entered" from="." to="." method="_on_Tile_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Tile_mouse_exited"]
