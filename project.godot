@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/SpawnPoints/Script/PointTop.gd"
 }, {
+"base": "Area2D",
+"class": "Tile",
+"language": "GDScript",
+"path": "res://Scenes/Cards/Script/Tile.gd"
+}, {
 "base": "Node",
 "class": "TileBase",
 "language": "GDScript",
@@ -56,6 +61,7 @@ _global_script_class_icons={
 "MenuOptionsBase": "",
 "PointSide": "",
 "PointTop": "",
+"Tile": "",
 "TileBase": "",
 "TimerBase": ""
 }
