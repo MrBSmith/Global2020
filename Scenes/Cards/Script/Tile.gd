@@ -4,12 +4,14 @@ var offset : Vector2
 var grab : bool
 var has_parent : bool
 var overlap : bool
+var is_rotating : bool
 
 # ---- READY ----
 
 func _ready():
 	grab = false
 	overlap = false
+	is_rotating = false
 	has_parent = get_parent() is Card
 	
 # ---- INPUT ----
@@ -36,11 +38,20 @@ func _input(event):
 		
 		if Input.is_action_just_pressed("rotate_card_clock") && Input.is_action_pressed("grab"):
 			if has_parent:
-				get_parent().set_rotation_degrees(get_parent().get_rotation_degrees() + 90)
+				if !is_rotating:
+					is_rotating = true
+					print("clock")
+					get_parent().set_rotation_degrees(get_parent().get_rotation_degrees() + 90)
 		
 		if Input.is_action_just_pressed("rotate_card_anti_clock") && Input.is_action_pressed("grab"):
 			if has_parent:
-				get_parent().set_rotation_degrees(get_parent().get_rotation_degrees() - 90)
+				if !is_rotating:
+					is_rotating = true
+					print("anti clock")
+					get_parent().set_rotation_degrees(get_parent().get_rotation_degrees() - 90)
+					
+		if Input.is_action_just_released("rotate_card_clock") || Input.is_action_just_released("rotate_card_anti_clock"):
+			is_rotating = false
 		
 		if Input.is_action_just_released("grab"):
 			grab = false
