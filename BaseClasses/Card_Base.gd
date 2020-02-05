@@ -3,10 +3,15 @@ class_name Card
 
 # ---- VARIABLES ----
 
+var tiles
+
 var rng = RandomNumberGenerator.new()
 
 var wall_node_path = "res://Scenes/Wall/Wall.tscn"
 var door_node_path = "res://Scenes/Wall/Door.tscn"
+
+var wall_node
+var door_node
 
 # how many doors the card can have, between the range 
 export(int) var min_door : int = 2
@@ -26,6 +31,13 @@ var remaining_walls
 # ---- ONREADY ----
 
 func _ready():
+	
+	tiles = get_children()
+	send_parent_reference()
+	
+	wall_node = load(wall_node_path)
+	door_node = load(door_node_path)
+	
 	rng.randomize()
 	door_count = rng.randi_range(min_door, max_door)
 	
@@ -43,22 +55,44 @@ func _ready():
 
 # ---- FUNCTIONS ----
 
+# function : send_parent_reference
+# parameters : None
+# returns : None
+# description : send self reference to children
+
+func send_parent_reference():
+	for child in tiles:
+		if child is Area2D:
+			child.init_parent(self)
+
+
+# function : tiles_hold_position
+# parameters : (Vector2)
+# returns : None
+# description : Apply an offset to all the tiles so they keep their position when moving the base node
+
+func tiles_hold_position(point):
+	for tile in tiles:
+		if tile is Area2D:
+			tile.set_global_position(tile.get_global_position() + point)
+
+
 # function : count_sides
 # parameters : (Node)
 # returns : int
 # description : count how many sides the card has
 
-func count_sides(Node):
+func count_sides(node):
 	# For each nodes in the given node
-	for current_node in Node.get_children():
-		# if the current children node, named N, has children nodes
+	for current_node in node.get_children():
+		# if the current children node has children
 		if current_node.get_child_count() > 0:
 			# calls back the function to get the children node of the current node
 			count_sides(current_node)
-		# The current node is the last children node
+		# The current node is the last child node
 		else:
 			
-			# if the current node is a side
+			# if the current node is a point
 			if(current_node is PointTop || current_node is PointSide):
 				side_count += 1
 
@@ -90,16 +124,16 @@ func generate_door():
 # returns : None
 # description : Check if the node has childs, if it's a spawn point, place a wall
 
-func place_all_walls(Node):
+func place_all_walls(node):
 	
 	# For each nodes in the given node
-	for current_node in Node.get_children():
-		# if the current children node, named N, has children nodes
+	for current_node in node.get_children():
+		# if the current children node has children
 		if current_node.get_child_count() > 0:
 			# calls back the function to get the children node of the current node
 			place_all_walls(current_node)
 			
-		# The current node is the last children node
+		# The current node is the last child
 		else:
 			
 			# if the current node is from PointTop class
@@ -109,9 +143,9 @@ func place_all_walls(Node):
 				var side
 				# if it's a door
 				if generate_door():
-					side = load(door_node_path).instance()
+					side = door_node.instance()
 				else:
-					side = load(wall_node_path).instance()
+					side = wall_node.instance()
 					
 				# makes it horizontal
 				side.set_rotation_degrees(90)
@@ -125,9 +159,9 @@ func place_all_walls(Node):
 				var side
 				# if it's a door
 				if generate_door():
-					side = load(door_node_path).instance()
+					side = door_node.instance()
 				else:
-					side = load(wall_node_path).instance()
+					side = wall_node.instance()
 					
 				# add it to the scene
 				current_node.add_child(side)
