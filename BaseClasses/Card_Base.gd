@@ -17,6 +17,11 @@ var door_node
 export(int) var min_door : int = 2
 export(int) var max_door : int = 2
 
+# chances to get a color
+export(int) var blue : int = 0
+export(int) var grey : int = 100
+export(int) var red : int = 0
+
 # Number of sides the room has
 var side_count
 # the number of door the room will have
@@ -96,6 +101,26 @@ func send_parent_reference():
 	for child in tiles:
 		if child is Area2D:
 			child.init_parent(self)
+			
+func pick_color():
+	var lowest = 0
+	var highest = 0
+	var rates = [blue, grey, red]
+	
+	for i in range (0,3):
+		if highest < rates[i]:
+			highest = rates[i]
+		if lowest > rates[i]:
+			lowest = rates[i]
+
+	rng.randomize()
+	var pick = rng.randi(0, highest - 1)
+	
+	for i in range (0,3):
+		if 0 < pick < lowest:
+			pass
+		if lowest < pick < highest:
+			pass
 
 
 # -- spawn walls functions --
