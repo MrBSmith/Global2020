@@ -27,10 +27,19 @@ var wall_count
 var remaining_doors
 var remaining_walls
 
+# -- drag & drop & rotate variables --
+
+var grab : bool
+var offset : Vector2
+var temp_mouse_pos : Vector2
+var is_rotating : bool
+
 
 # ---- ONREADY ----
 
 func _ready():
+	
+	grab = false
 	
 	tiles = get_children()
 	send_parent_reference()
@@ -51,6 +60,29 @@ func _ready():
 	
 	# Place walls and doors
 	place_all_walls(get_node("."))
+
+
+# ---- INPUT ----
+
+func _input(event):
+	
+	if grab:
+		
+		# If the card is grabbed and the clockwise button is pressed
+		if Input.is_action_just_pressed("rotate_card_clock"):
+			if !is_rotating:
+				is_rotating = true
+				set_rotation_degrees(get_rotation_degrees() + 90)
+		
+		# If the tile is held and the anti clockwise button is pressed
+		elif Input.is_action_just_pressed("rotate_card_anti_clock"):
+			if !is_rotating:
+				is_rotating = true
+				set_rotation_degrees(get_rotation_degrees() - 90)
+		
+		# To avoid wierd double input
+		elif Input.is_action_just_released("rotate_card_clock") || Input.is_action_just_released("rotate_card_anti_clock"):
+			is_rotating = false
 	
 
 # ---- FUNCTIONS ----
@@ -66,16 +98,7 @@ func send_parent_reference():
 			child.init_parent(self)
 
 
-# function : tiles_hold_position
-# parameters : (Vector2)
-# returns : None
-# description : Apply an offset to all the tiles so they keep their position when moving the base node
-
-func tiles_hold_position(point):
-	for tile in tiles:
-		if tile is Area2D:
-			tile.set_global_position(tile.get_global_position() + point)
-
+# -- spawn walls functions --
 
 # function : count_sides
 # parameters : (Node)
@@ -165,3 +188,47 @@ func place_all_walls(node):
 					
 				# add it to the scene
 				current_node.add_child(side)
+
+
+# -- drag & drop & rotate functions --
+
+# function : tiles_hold_position
+# parameters : (Vector2)
+# returns : None
+# description : Apply an offset to all the tiles so they keep their position when moving the base node
+
+func tiles_hold_position(point):
+	for tile in tiles:
+		if tile is Area2D:
+			tile.set_global_position(tile.get_global_position() + point)
+
+
+# function : drag
+# parameters : None
+# returns : None
+# description : used to start to drag the card
+
+func drag():
+	temp_mouse_pos = get_viewport().get_mouse_position()
+	offset = get_global_position() - temp_mouse_pos
+	tiles_hold_position(offset)
+	set_global_position(temp_mouse_pos)
+	get_node("Sprite").set_visible(true)
+	grab = true
+
+
+# function : drop
+# parameters : None
+# returns : None
+# description : used to stop drop the card
+
+func drop():
+	grab = false
+	offset = Vector2.ZERO
+	get_node("Sprite").set_visible(false)
+
+# ---- PROCESS ----
+
+func _process(delta):
+	if grab:
+		set_global_position(get_viewport().get_mouse_position())
