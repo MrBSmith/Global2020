@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scenes/Character/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Tiles/Void/Void.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scenes/Game/Music.gd" type="Script" id=8]
 [ext_resource path="res://Scenes/AudioStream/AudioStreamBase.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/GUI/Timer/Timer.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Cards/LX2.tscn" type="PackedScene" id=11]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
@@ -20,6 +21,7 @@ __meta__ = {
 [node name="Tiles" type="Node" parent="."]
 
 [node name="Void" type="Node2D" parent="Tiles"]
+z_index = -5
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
@@ -52,3 +54,6 @@ stream = ExtResource( 5 )
 z_index = 999
 
 [node name="NTimer" parent="GUI" instance=ExtResource( 10 )]
+
+[node name="LX2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 167.147, 30.7722 )
