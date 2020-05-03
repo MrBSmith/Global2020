@@ -60,31 +60,13 @@ func _input(_event):
 	if overlap:
 		# Drag
 		if Input.is_action_just_pressed("grab"):
-			if has_parent:
-				grab = true
-				emit_signal("tile_grabed")
+			grab = true
+			emit_signal("tile_grabed")
 		
 		# Drop
 		elif Input.is_action_just_released("grab"):
-			if has_parent:
-				grab = false
-				emit_signal("tile_droped")
-				# If the mouse is outside the sprite, set the overlap to false
-				if outside:
-					overlap = false
-
-
-# ---- FUNCTIONS ----
-
-# function : set_parent
-# parameters : node
-# returns : None
-# description : set the parent variable with the node in parameter
-
-func init_parent(node):
-	if node != null:
-		parent = node
-		has_parent = true
-	else:
-		print("ERROR : parent node is null")
-		has_parent = false
+			grab = false
+			emit_signal("tile_droped")
+			# If the mouse is outside the sprite, set the overlap to false
+			if outside:
+				overlap = false
