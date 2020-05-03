@@ -42,7 +42,7 @@ func _on_Tile_mouse_exited():
 		overlap = false
 
 
-func _input(event):
+func _input(_event):
 	
 	# Check if the mouse overlap the tile
 	if overlap:

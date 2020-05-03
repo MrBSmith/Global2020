@@ -82,7 +82,7 @@ func _ready():
 
 # ---- INPUT ----
 
-func _input(event):
+func _input(_event):
 	
 	if grab:
 		
@@ -136,7 +136,6 @@ func count_sides(node):
 			# if the current node is a point
 			if(current_node is PointTop || current_node is PointSide):
 				side_count += 1
-
 
 # funciton : generate_door
 # parameters : None
@@ -292,6 +291,6 @@ func drop():
 
 # ---- PROCESS ----
 
-func _process(delta):
+func _process(_delta):
 	if grab:
 		set_global_position(get_viewport().get_mouse_position())
