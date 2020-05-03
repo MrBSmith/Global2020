@@ -23,8 +23,11 @@ func on_ready():
 			child.on_ready()
 	node_Timer.start_timer()
 
+
 func on_timer_started():
-	print("Timer started!")
+	#print("Timer started!")
+	pass
+
 
 func on_timer_timeout():
 	if(!is_on_gameover_screen):
@@ -34,4 +37,4 @@ func on_timer_timeout():
 		is_on_gameover_screen = true
 	else:
 		node_gameoverscene.queue_free()
-		get_tree().reload_current_scene()
+		var _err = get_tree().reload_current_scene()

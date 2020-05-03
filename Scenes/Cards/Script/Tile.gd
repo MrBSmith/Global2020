@@ -1,5 +1,6 @@
 extends Area2D
 class_name Tile
+const CLASS : String = "Tile"
 
 var parent
 
@@ -8,8 +9,16 @@ var has_parent : bool
 var overlap : bool
 var outside : bool
 
+func is_class(value: String) -> bool:
+	return value == CLASS
+
+func get_class() -> String:
+	return CLASS
 
 # ---- READY ----
+
+signal tile_grabed
+signal tile_droped
 
 func _ready():
 	has_parent = false
@@ -23,6 +32,9 @@ func _ready():
 	# So we need to check if the mouse is outside the tile so we can properly set the overlap variable to false
 	overlap = false
 	outside = false
+	
+	var _err = connect("tile_grabed", owner, "on_tile_grabed")
+	_err = connect("tile_droped", owner, "on_tile_droped")
 
 	
 # ---- INPUT ----
@@ -42,37 +54,19 @@ func _on_Tile_mouse_exited():
 		overlap = false
 
 
-func _input(event):
+func _input(_event):
 	
 	# Check if the mouse overlap the tile
 	if overlap:
 		# Drag
 		if Input.is_action_just_pressed("grab"):
-			if has_parent:
-				grab = true
-				parent.drag()
+			grab = true
+			emit_signal("tile_grabed")
 		
 		# Drop
 		elif Input.is_action_just_released("grab"):
-			if has_parent:
-				grab = false
-				parent.drop()
-				# If the mouse is outside the sprite, set the overlap to false
-				if outside:
-					overlap = false
-
-
-# ---- FUNCTIONS ----
-
-# function : set_parent
-# parameters : node
-# returns : None
-# description : set the parent variable with the node in parameter
-
-func init_parent(node):
-	if node != null:	
-		parent = node
-		has_parent = true
-	else:
-		print("ERROR : parent node is null")
-		has_parent = false
+			grab = false
+			emit_signal("tile_droped")
+			# If the mouse is outside the sprite, set the overlap to false
+			if outside:
+				overlap = false
