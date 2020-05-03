@@ -49,7 +49,7 @@ func check_clickable_options():
 	
 	for n in range(len(options_array)):
 		if(!options_array[n]._clickable):
-			options_array[n].set_self_modulate(Color(0.25,0.25,0.25,1))
+			options_array[n].set_self_modulate(Color(0.25, 0.25, 0.25, 1))
 
 
 func options_up():

@@ -54,3 +54,5 @@ z_index = 999
 
 [node name="LX2" parent="." instance=ExtResource( 11 )]
 position = Vector2( 167.147, 30.7722 )
+blue = 50
+red = 50

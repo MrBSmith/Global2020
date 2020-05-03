@@ -5,7 +5,6 @@
 [ext_resource path="res://Scenes/Tiles/Tile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Cards/BaseCard.tscn" type="PackedScene" id=4]
 
-
 [node name="LX2" instance=ExtResource( 4 )]
 
 [node name="Tile" parent="." index="0" instance=ExtResource( 3 )]

@@ -16,18 +16,18 @@ export(int) var blue : int = 0
 export(int) var grey : int = 100
 export(int) var red : int = 0
 
-var color_chance = {
+onready var color_chance : Dictionary = {
 	"blue" : blue,
 	"grey" : grey,
 	"red" : red
-	}
+}
 
 onready var hand_position = get_global_position()
 
+var card_placed : bool = false
 var tiles_array : Array = []
 
 var rng = RandomNumberGenerator.new()
-
 
 var remaining_doors
 var remaining_walls
@@ -49,14 +49,14 @@ func _ready():
 	var door_count = rng.randi_range(min_door, max_door)
 
 	# Check how many sides the card has to know how many walls it has
-	var side_count = count_sides(get_node("."))
+	var side_count = count_sides()
 	var wall_count = side_count - door_count
 
 	remaining_doors = door_count
 	remaining_walls = wall_count
 
 	# Place walls and doors
-	place_all_walls(get_node("."))
+	place_all_walls()
 	change_color(pick_color())
 
 
@@ -83,19 +83,14 @@ func _input(_event):
 # -- spawn walls functions --
 
 # Count how many sides the card has and return it
-func count_sides(node) -> int:
+func count_sides() -> int:
 	var counter : int = 0
 
 	# For each nodes in the given node
-	for current_node in node.get_children():
-		# if the current children node has children
-		if current_node.get_child_count() > 0:
-			# calls back the function to get the children node of the current node
-			counter += count_sides(current_node)
-		# The current node is the last child node
-		else:
+	for tile in tiles_array:
+		for child in get_children():
 			# if the current node is a point
-			if(current_node is PointTop || current_node is PointSide):
+			if child is PointTop or child is PointSide:
 				counter += 1
 
 	return counter
@@ -119,45 +114,25 @@ func generate_door() -> bool:
 		return false
 
 
-
 # Check if the node has childs, if it's a spawn point, place a wall
-func place_all_walls(node : Node):
-	# For each nodes in the given node
-	for current_node in node.get_children():
-		# if the current children node has children
-		if current_node.get_child_count() > 0:
-			# calls back the function to get the children node of the current node
-			place_all_walls(current_node)
-
-		# The current node is the last child
-		else:
-			# if the current node is from PointTop class
-			if current_node is PointTop:
-				# spawns a horizontal wall
+func place_all_walls():
+	for tile in tiles_array:
+		for current_node in tile.get_children():
+			if current_node is Position2D:
 				var side
 				# if it's a door
 				if generate_door():
 					side = door_node.instance()
 				else:
 					side = wall_node.instance()
-
-				# makes it horizontal
-				side.set_rotation_degrees(90)
-				# add it to the scene
-				current_node.add_child(side)
-
-			# else, if the node is from PointSide class
-			elif current_node is PointSide:
-				# spawns a vertical wall
-				var side
-				# if it's a door
-				if generate_door():
-					side = door_node.instance()
-				else:
-					side = wall_node.instance()
-
-				# add it to the scene
-				current_node.add_child(side)
+				
+				# Makes it horizontal if the point is a top one
+				if current_node is PointTop:
+					side.set_rotation_degrees(90)
+				
+				# Add the door/wall to rh 
+				side.set_position(current_node.get_position())
+				tile.add_child(side)
 
 
 # Pick a random color depending of the color chance values
@@ -184,14 +159,13 @@ func pick_color():
 
 
 # Changes the tiles' color to the one sent in parameters
-
 func change_color(color):
-	var color_var = Color(0,0,0,0)
+	var color_var = Color(0, 0, 0, 0)
 
 	if color == "blue":
-		color_var = Color(0,0,1,0.2)
+		color_var = Color(0, 0, 1, 0.2)
 	elif color == "red":
-		color_var = Color(1,0,0,0.2)
+		color_var = Color(1, 0, 0, 0.2)
 
 	for tile in tiles_array:
 		tile.get_node("TileColor").color = color_var
@@ -201,22 +175,31 @@ func change_color(color):
 # Triggered by (and connected from) a child tile
 # Compute the offset between the mouse position and the position of the card to move the card accordingly
 func on_tile_grabed():
-	var mouse_pos = get_viewport().get_mouse_position()
-	offset_with_mouse = mouse_pos - get_global_position()
-	grab = true
+	if !card_placed:
+		var mouse_pos = get_viewport().get_mouse_position()
+		offset_with_mouse = mouse_pos - get_global_position()
+		grab = true
 
 
 # Triggered by (and connected from) a child tile
 # Reset the offset at zero, and snap the card to the nearest position
 # If the position isn't empty, reset its position in the hand of the player
 func on_tile_droped():
-	grab = false
-	offset_with_mouse = Vector2.ZERO
-	global_position += get_the_nearest_tile_translation()
-
-	if !is_card_on_empty_place():
-		set_global_position(hand_position)
-		set_rotation_degrees(0)
+	if !card_placed:
+		grab = false
+		offset_with_mouse = Vector2.ZERO
+		global_position += get_the_nearest_tile_translation()
+	
+		if is_card_on_empty_place():
+			card_placed = true
+			for tile in tiles_array:
+				tile.activate_walls()
+				for area in tile.get_overlapping_areas():
+					if area is VoidTile:
+						area.queue_free()
+		else:
+			set_global_position(hand_position)
+			set_rotation_degrees(0)
 
 
 # Check if there is a void tile under each tiles of the card
