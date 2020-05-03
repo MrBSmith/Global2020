@@ -33,8 +33,9 @@ func _ready():
 	overlap = false
 	outside = false
 	
-	var _err = connect("tile_grabed", owner, "on_tile_grabed")
-	_err = connect("tile_droped", owner, "on_tile_droped")
+	if owner != null:
+		var _err = connect("tile_grabed", owner, "on_tile_grabed")
+		_err = connect("tile_droped", owner, "on_tile_droped")
 
 	
 # ---- INPUT ----
@@ -55,8 +56,6 @@ func _on_Tile_mouse_exited():
 
 
 func _input(_event):
-	
-	# Check if the mouse overlap the tile
 	if overlap:
 		# Drag
 		if Input.is_action_just_pressed("grab"):
