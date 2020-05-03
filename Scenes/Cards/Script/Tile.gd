@@ -69,3 +69,9 @@ func _input(_event):
 			# If the mouse is outside the sprite, set the overlap to false
 			if outside:
 				overlap = false
+
+# Set every walls collsision to be active
+func activate_walls():
+	for child in get_children():
+		if child.is_class("Wall"):
+			child.get_node("CollisionShape2D").set_disabled(false)
