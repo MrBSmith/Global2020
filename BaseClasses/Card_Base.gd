@@ -3,15 +3,14 @@ class_name Card
 
 # ---- VARIABLES ----
 
-var tiles
+onready var hand_position = get_global_position()
+
+var tiles_array : Array = []
 
 var rng = RandomNumberGenerator.new()
 
-var wall_node_path = "res://Scenes/Wall/Wall.tscn"
-var door_node_path = "res://Scenes/Wall/Door.tscn"
-
-var wall_node
-var door_node
+onready var wall_node = preload("res://Scenes/Wall/Wall.tscn")
+onready var door_node = preload("res://Scenes/Wall/Door.tscn")
 
 # how many doors the card can have, between the range 
 export(int) var min_door : int = 2
@@ -29,11 +28,11 @@ var color_chance
 
 
 # Number of sides the room has
-var side_count
+var side_count := 0
 # the number of door the room will have
-var door_count
+var door_count := 0
 # the number of walls the room will have
-var wall_count
+var wall_count := 0
 
 var remaining_doors
 var remaining_walls
@@ -49,14 +48,14 @@ var is_rotating : bool
 # ---- ONREADY ----
 
 func _ready():
-	
 	grab = false
 	
-	tiles = get_children()
-	send_parent_reference()
+	# Get every tiles of the card
+	for child in get_children():
+		if child.is_class("Tile"):
+			tiles_array.append(child)
 	
-	wall_node = load(wall_node_path)
-	door_node = load(door_node_path)
+	send_parent_reference()
 	
 	rng.randomize()
 	door_count = rng.randi_range(min_door, max_door)
@@ -80,12 +79,17 @@ func _ready():
 	change_color(pick_color())
 
 
+# ---- PROCESS ----
+
+func _process(_delta):
+	if grab:
+		set_global_position(get_viewport().get_mouse_position())
+
+
 # ---- INPUT ----
 
 func _input(_event):
-	
 	if grab:
-		
 		# If the card is grabbed and the clockwise button is pressed
 		if Input.is_action_just_pressed("rotate_card_clock"):
 			if !is_rotating:
@@ -111,9 +115,8 @@ func _input(_event):
 # description : send self reference to children
 
 func send_parent_reference():
-	for child in tiles:
-		if child is Area2D:
-			child.init_parent(self)
+	for child in tiles_array:
+		child.init_parent(self)
 
 
 # -- spawn walls functions --
@@ -260,9 +263,8 @@ func change_color(color):
 # description : Apply an offset to all the tiles so they keep their position when moving the base node
 
 func tiles_hold_position(point):
-	for tile in tiles:
-		if tile is Area2D:
-			tile.set_global_position(tile.get_global_position() + point)
+	for tile in tiles_array:
+		tile.set_global_position(tile.get_global_position() + point)
 
 
 # function : drag
@@ -275,9 +277,8 @@ func drag():
 	offset = get_global_position() - temp_mouse_pos
 	tiles_hold_position(offset)
 	set_global_position(temp_mouse_pos)
-	get_node("Sprite").set_visible(true)
 	grab = true
-
+	# get_node("Sprite").set_visible(true)
 
 # function : drop
 # parameters : None
@@ -287,10 +288,46 @@ func drag():
 func drop():
 	grab = false
 	offset = Vector2.ZERO
-	get_node("Sprite").set_visible(false)
+	global_position += get_the_nearest_tile_translation()
+	
+	if !is_card_on_empty_place():
+		set_global_position(hand_position)
+	
+	# get_node("Sprite").set_visible(false)
 
-# ---- PROCESS ----
 
-func _process(_delta):
-	if grab:
-		set_global_position(get_viewport().get_mouse_position())
+# Check if there is a void tile under each tiles of the card
+# Return true if its the case, false in any other case
+func is_card_on_empty_place() -> bool:
+	for tile in tiles_array:
+		var areas_overlapping = tile.get_overlapping_areas()
+		if len(areas_overlapping) == 0:
+			return false
+		if !is_there_node_of_class(areas_overlapping, "VoidTile"):
+			return false
+	
+	return true
+
+
+# Return true if at least one of the nodes of the array is of the given class
+func is_there_node_of_class(array : Array, class_to_find : String) -> bool:
+	for node in array:
+		if node.is_class(class_to_find):
+			return true
+	return false
+
+
+# Find the nearest void tile, gets its translation with the card, and returns it 
+func get_the_nearest_tile_translation() -> Vector2:
+	var tile0_pos = tiles_array[0].get_global_position()
+	var void_tiles_array = get_tree().get_nodes_in_group("VoidTiles")
+	var smallest_distance = INF
+	var direction_to := Vector2.ZERO
+	
+	for void_tile in void_tiles_array:
+		var current_distance = tile0_pos.distance_to(void_tile.get_global_position())
+		if current_distance < smallest_distance:
+			smallest_distance = current_distance
+			direction_to = tile0_pos.direction_to(void_tile.get_global_position())
+	
+	return direction_to * smallest_distance

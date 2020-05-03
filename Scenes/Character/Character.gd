@@ -19,8 +19,14 @@ func _ready():
 	self.position.x = screen_width/2-4
 	self.position.y = screen_height/2
 
+
+# ----- TICK PROCESS -----
+
+func _physics_process(_delta):
+	move()
+
+
 func move():
-	
 	# If there's input, accelerate to the input velocity
 	if direction.length() > 0:
 		velocity = velocity.linear_interpolate(direction, acceleration)
@@ -34,7 +40,7 @@ func move():
 
 # ----- INPUT -----
 
-func get_input():
+func _input(_event):
 	direction = Vector2()
 	if Input.is_action_pressed("fast_speed"):
 		speed = fast_speed
@@ -56,10 +62,4 @@ func get_input():
 		direction.y -= 1
 		
 	direction = direction.normalized() * speed
-	
 
-# ----- TICK PROCESS -----
-
-func _physics_process(_delta):
-	get_input()
-	move()

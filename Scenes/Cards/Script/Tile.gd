@@ -1,5 +1,6 @@
 extends Area2D
 class_name Tile
+const CLASS : String = "Tile"
 
 var parent
 
@@ -8,6 +9,11 @@ var has_parent : bool
 var overlap : bool
 var outside : bool
 
+func is_class(value: String) -> bool:
+	return value == CLASS
+
+func get_class() -> String:
+	return CLASS
 
 # ---- READY ----
 
@@ -70,7 +76,7 @@ func _input(_event):
 # description : set the parent variable with the node in parameter
 
 func init_parent(node):
-	if node != null:	
+	if node != null:
 		parent = node
 		has_parent = true
 	else:

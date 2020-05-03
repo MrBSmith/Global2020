@@ -20,12 +20,9 @@ __meta__ = {
 
 [node name="Tiles" type="Node" parent="."]
 
-[node name="Void" type="Node2D" parent="Tiles"]
+[node name="GridGen" type="Node2D" parent="Tiles"]
 z_index = -5
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Character" parent="." instance=ExtResource( 1 )]
 z_index = 1

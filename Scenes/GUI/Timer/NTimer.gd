@@ -25,7 +25,8 @@ func on_ready():
 
 
 func on_timer_started():
-	print("Timer started!")
+	#print("Timer started!")
+	pass
 
 
 func on_timer_timeout():
