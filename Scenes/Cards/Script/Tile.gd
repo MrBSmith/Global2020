@@ -17,6 +17,9 @@ func get_class() -> String:
 
 # ---- READY ----
 
+signal tile_grabed
+signal tile_droped
+
 func _ready():
 	has_parent = false
 	
@@ -29,6 +32,9 @@ func _ready():
 	# So we need to check if the mouse is outside the tile so we can properly set the overlap variable to false
 	overlap = false
 	outside = false
+	
+	var _err = connect("tile_grabed", owner, "on_tile_grabed")
+	_err = connect("tile_droped", owner, "on_tile_droped")
 
 	
 # ---- INPUT ----
@@ -56,13 +62,13 @@ func _input(_event):
 		if Input.is_action_just_pressed("grab"):
 			if has_parent:
 				grab = true
-				parent.drag()
+				emit_signal("tile_grabed")
 		
 		# Drop
 		elif Input.is_action_just_released("grab"):
 			if has_parent:
 				grab = false
-				parent.drop()
+				emit_signal("tile_droped")
 				# If the mouse is outside the sprite, set the overlap to false
 				if outside:
 					overlap = false

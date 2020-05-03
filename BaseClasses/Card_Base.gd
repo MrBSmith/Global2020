@@ -39,9 +39,8 @@ var remaining_walls
 
 # -- drag & drop & rotate variables --
 
+var offset_with_mouse := Vector2.ZERO
 var grab : bool
-var offset : Vector2
-var temp_mouse_pos : Vector2
 var is_rotating : bool
 
 
@@ -83,7 +82,7 @@ func _ready():
 
 func _process(_delta):
 	if grab:
-		set_global_position(get_viewport().get_mouse_position())
+		set_global_position(get_viewport().get_mouse_position() - offset_with_mouse)
 
 
 # ---- INPUT ----
@@ -257,43 +256,25 @@ func change_color(color):
 
 # -- drag & drop & rotate functions --
 
-# function : tiles_hold_position
-# parameters : (Vector2)
-# returns : None
-# description : Apply an offset to all the tiles so they keep their position when moving the base node
-
-func tiles_hold_position(point):
-	for tile in tiles_array:
-		tile.set_global_position(tile.get_global_position() + point)
-
-
-# function : drag
-# parameters : None
-# returns : None
-# description : used to start to drag the card
-
-func drag():
-	temp_mouse_pos = get_viewport().get_mouse_position()
-	offset = get_global_position() - temp_mouse_pos
-	tiles_hold_position(offset)
-	set_global_position(temp_mouse_pos)
+# Triggered by (and connected from) a child tile
+# Compute the offset between the mouse position and the position of the card to move the card accordingly
+func on_tile_grabed():
+	var mouse_pos = get_viewport().get_mouse_position()
+	offset_with_mouse = mouse_pos - get_global_position()
 	grab = true
-	# get_node("Sprite").set_visible(true)
 
-# function : drop
-# parameters : None
-# returns : None
-# description : used to stop drop the card
 
-func drop():
+# Triggered by (and connected from) a child tile
+# Reset the offset at zero, and snap the card to the nearest position
+# If the position isn't empty, reset its position in the hand of the player
+func on_tile_droped():
 	grab = false
-	offset = Vector2.ZERO
+	offset_with_mouse = Vector2.ZERO
 	global_position += get_the_nearest_tile_translation()
 	
 	if !is_card_on_empty_place():
 		set_global_position(hand_position)
-	
-	# get_node("Sprite").set_visible(false)
+		set_rotation_degrees(0)
 
 
 # Check if there is a void tile under each tiles of the card
