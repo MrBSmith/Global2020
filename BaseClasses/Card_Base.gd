@@ -77,7 +77,7 @@ func _ready():
 	"grey" : grey,
 	"red" : red
 	}
-	pick_color()
+	change_color(pick_color())
 
 
 # ---- INPUT ----
@@ -210,7 +210,7 @@ func place_all_walls(node):
 
 # function : pick_color
 # parameters : (None)
-# returns : None
+# returns : String
 # description: pick a random color depending of the color chance values
 
 func pick_color():
@@ -225,16 +225,33 @@ func pick_color():
 	
 	var previous_scores = 0
 	
-	for chance in color_chance:
+	for color_key in color_chance:
 		
-		if previous_scores < color_pick && color_pick < color_chance.get(chance) + previous_scores:
+		if previous_scores < color_pick && color_pick < color_chance.get(color_key) + previous_scores:
 			# color found
-			print("color found : " + chance)
-			pass
+			return color_key
 		else:
 			# color not found
-			previous_scores += color_chance.get(chance)
+			previous_scores += color_chance.get(color_key)
 
+
+
+# function : change_color
+# parameters : (String)
+# returns : None
+# description : changes the tiles' color to the one sent in parameters
+
+func change_color(color):
+	var color_var = Color(0,0,0,0)
+
+	if color == "blue":
+		color_var = Color(0,0,1,0.2)
+	elif color == "red":
+		color_var = Color(1,0,0,0.2)
+		
+	for tile in tiles:
+		if tile is Area2D:
+			tile.get_node("TileColor").color = color_var
 
 # -- drag & drop & rotate functions --
 
