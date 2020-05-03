@@ -16,7 +16,7 @@ export(int) var blue : int = 0
 export(int) var grey : int = 100
 export(int) var red : int = 0
 
-var color_chance = {
+onready var color_chance : Dictionary = {
 	"blue" : blue,
 	"grey" : grey,
 	"red" : red
@@ -159,7 +159,6 @@ func pick_color():
 
 
 # Changes the tiles' color to the one sent in parameters
-
 func change_color(color):
 	var color_var = Color(0, 0, 0, 0)
 
