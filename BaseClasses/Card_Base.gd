@@ -18,9 +18,15 @@ export(int) var min_door : int = 2
 export(int) var max_door : int = 2
 
 # chances to get a color
+# To prevent a color from being chosen, set the color value to 0
 export(int) var blue : int = 0
 export(int) var grey : int = 100
 export(int) var red : int = 0
+
+
+var color_chance
+
+
 
 # Number of sides the room has
 var side_count
@@ -65,6 +71,13 @@ func _ready():
 	
 	# Place walls and doors
 	place_all_walls(get_node("."))
+	
+	color_chance = {
+	"blue" : blue,
+	"grey" : grey,
+	"red" : red
+	}
+	change_color(pick_color())
 
 
 # ---- INPUT ----
@@ -101,26 +114,6 @@ func send_parent_reference():
 	for child in tiles:
 		if child is Area2D:
 			child.init_parent(self)
-			
-func pick_color():
-	var lowest = 0
-	var highest = 0
-	var rates = [blue, grey, red]
-	
-	for i in range (0,3):
-		if highest < rates[i]:
-			highest = rates[i]
-		if lowest > rates[i]:
-			lowest = rates[i]
-
-	rng.randomize()
-	var pick = rng.randi(0, highest - 1)
-	
-	for i in range (0,3):
-		if 0 < pick < lowest:
-			pass
-		if lowest < pick < highest:
-			pass
 
 
 # -- spawn walls functions --
@@ -214,6 +207,51 @@ func place_all_walls(node):
 				# add it to the scene
 				current_node.add_child(side)
 
+
+# function : pick_color
+# parameters : (None)
+# returns : String
+# description: pick a random color depending of the color chance values
+
+func pick_color():
+	
+	var total_chance = 0
+	
+	for chance in color_chance.values():
+		total_chance += chance
+	
+	rng.randomize()
+	var color_pick = rng.randi_range(1, total_chance)
+	
+	var previous_scores = 0
+	
+	for color_key in color_chance:
+		
+		if previous_scores < color_pick && color_pick < color_chance.get(color_key) + previous_scores:
+			# color found
+			return color_key
+		else:
+			# color not found
+			previous_scores += color_chance.get(color_key)
+
+
+
+# function : change_color
+# parameters : (String)
+# returns : None
+# description : changes the tiles' color to the one sent in parameters
+
+func change_color(color):
+	var color_var = Color(0,0,0,0)
+
+	if color == "blue":
+		color_var = Color(0,0,1,0.2)
+	elif color == "red":
+		color_var = Color(1,0,0,0.2)
+		
+	for tile in tiles:
+		if tile is Area2D:
+			tile.get_node("TileColor").color = color_var
 
 # -- drag & drop & rotate functions --
 
