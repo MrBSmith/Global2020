@@ -16,7 +16,11 @@ export(int) var blue : int = 0
 export(int) var grey : int = 100
 export(int) var red : int = 0
 
-var color_chance
+var color_chance = {
+	"blue" : blue,
+	"grey" : grey,
+	"red" : red
+	}
 
 onready var hand_position = get_global_position()
 
@@ -53,12 +57,6 @@ func _ready():
 
 	# Place walls and doors
 	place_all_walls(get_node("."))
-
-	color_chance = {
-	"blue" : blue,
-	"grey" : grey,
-	"red" : red
-	}
 	change_color(pick_color())
 
 
@@ -185,11 +183,7 @@ func pick_color():
 			previous_scores += color_chance.get(color_key)
 
 
-
-# function : change_color
-# parameters : (String)
-# returns : None
-# description : changes the tiles' color to the one sent in parameters
+# Changes the tiles' color to the one sent in parameters
 
 func change_color(color):
 	var color_var = Color(0,0,0,0)
@@ -199,9 +193,8 @@ func change_color(color):
 	elif color == "red":
 		color_var = Color(1,0,0,0.2)
 
-	for tile in tiles:
-		if tile is Area2D:
-			tile.get_node("TileColor").color = color_var
+	for tile in tiles_array:
+		tile.get_node("TileColor").color = color_var
 
 # -- drag & drop & rotate functions --
 
