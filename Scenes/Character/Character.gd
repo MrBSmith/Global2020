@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 const fast_speed = 60.0
 const medium_speed = 36.0
@@ -16,8 +17,8 @@ var screen_width : float = ProjectSettings.get("display/window/size/width")
 var screen_height : float =  ProjectSettings.get("display/window/size/height")
 
 func _ready():
-	self.position.x = screen_width/2-4
-	self.position.y = screen_height/2
+	self.position.x = screen_width / 2
+	self.position.y = screen_height / 2
 
 
 # ----- TICK PROCESS -----
@@ -51,15 +52,12 @@ func _input(_event):
 	
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
-			
 	if Input.is_action_pressed("ui_left"):
 		direction.x -= 1
-			
 	if Input.is_action_pressed("ui_down"):
 		direction.y += 1
-			
 	if Input.is_action_pressed("ui_up"):
 		direction.y -= 1
-		
+
 	direction = direction.normalized() * speed
 

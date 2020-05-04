@@ -4,5 +4,6 @@
 
 [node name="BaseCard" type="Node2D"]
 script = ExtResource( 1 )
-blue = 100
-grey = 0
+blue = 33
+grey = 33
+red = 33

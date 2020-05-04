@@ -65,5 +65,5 @@ func options_down():
 
 # Change the color of menu option according if it is selected by a player or not
 func highlight_menuopt():
-	options_array[prev_opt_index].set_self_modulate(Color(1,1,1,1)) # WHITE COLOR = Not selected
-	options_array[opt_index].set_self_modulate(Color(1,0,0,1)) # RED COLOR = SELECTED
+	options_array[prev_opt_index].set_self_modulate(Color(1, 1, 1, 1)) # WHITE COLOR = Not selected
+	options_array[opt_index].set_self_modulate(Color(1, 0, 0, 1)) # RED COLOR = SELECTED
