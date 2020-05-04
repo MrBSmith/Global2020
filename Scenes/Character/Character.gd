@@ -1,11 +1,11 @@
 extends KinematicBody2D
 class_name Player
 
-const fast_speed = 60.0
-const medium_speed = 36.0
-const slow_speed = 22.0
+export var fast_speed : float = 120.0
+export var medium_speed : float = 60.0
+export var slow_speed : float = 30.0
 
-export var speed : float = 10
+var speed : float = medium_speed setget set_speed
 export var friction : float = 0.08
 export var acceleration : float = 0.08
 
@@ -14,6 +14,11 @@ var direction := Vector2()
 
 var screen_width : float = ProjectSettings.get("display/window/size/width")
 var screen_height : float =  ProjectSettings.get("display/window/size/height")
+
+
+func set_speed(value: float):
+	speed = value
+
 
 func _ready():
 	self.position.x = screen_width / 2

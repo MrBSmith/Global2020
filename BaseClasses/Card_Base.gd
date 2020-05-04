@@ -24,8 +24,6 @@ onready var color_chance : Dictionary = {
 	"red" : red
 }
 
-var color: String = "white"
-
 var card_placed : bool = false
 var tiles_array : Array = []
 
@@ -61,8 +59,8 @@ func _ready():
 
 	# Place walls and doors
 	place_all_walls()
-	color = pick_color()
-	change_color()
+	var color_name = pick_color()
+	change_tiles_color(color_name)
 
 
 # ---- PROCESS ----
@@ -158,19 +156,11 @@ func pick_color():
 			previous_scores += color_chance.get(color_key) # color not found
 
 
-# Changes the tiles' color to the one sent in parameters
-func change_color():
-	var color_var = Color(0, 0, 0, 0)
-
-	if color == "blue":
-		color_var = Color(0, 0, 1, 0.2)
-	elif color == "grey":
-		color_var = Color(1, 1, 1, 0.2)
-	elif color == "red":
-		color_var = Color(1, 0, 0, 0.2)
-
+# Changes the tiles color to the one sent in parameters
+func change_tiles_color(color_name : String):
 	for tile in tiles_array:
-		tile.get_node("TileColor").color = color_var
+		tile.set_color(tile.get(color_name))
+
 
 # -- drag & drop & rotate functions --
 
