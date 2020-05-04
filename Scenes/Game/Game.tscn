@@ -10,7 +10,7 @@
 [ext_resource path="res://Scenes/Game/Music.gd" type="Script" id=8]
 [ext_resource path="res://Scenes/AudioStream/AudioStreamBase.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/GUI/Timer/Timer.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Cards/LX2.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Hand/Hand.tscn" type="PackedScene" id=12]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
@@ -18,9 +18,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Tiles" type="Node" parent="."]
-
-[node name="GridGen" type="Node2D" parent="Tiles"]
+[node name="Grid" type="Node2D" parent="."]
 z_index = -5
 script = ExtResource( 2 )
 
@@ -49,10 +47,11 @@ stream = ExtResource( 5 )
 
 [node name="GUI" type="Node2D" parent="."]
 z_index = 999
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="NTimer" parent="GUI" instance=ExtResource( 10 )]
 
-[node name="LX2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 167.147, 30.7722 )
-blue = 50
-red = 50
+[node name="Hand" parent="." instance=ExtResource( 12 )]
+position = Vector2( 180, 0 )

@@ -36,6 +36,8 @@ func _ready():
 	if owner != null:
 		var _err = connect("tile_grabed", owner, "on_tile_grabed")
 		_err = connect("tile_droped", owner, "on_tile_droped")
+		_err = connect("body_entered", owner, "on_tile_body_entered")
+		_err = connect("body_exited", owner, "on_tile_body_exited")
 
 	
 # ---- INPUT ----
@@ -75,3 +77,10 @@ func activate_walls():
 	for child in get_children():
 		if child.is_class("Wall"):
 			child.get_node("CollisionShape2D").set_disabled(false)
+
+
+# Destroy every voidtile underneath this tile
+func destroy_walls_underneath():
+	for area in get_overlapping_areas():
+		if area is VoidTile:
+			area.queue_free()

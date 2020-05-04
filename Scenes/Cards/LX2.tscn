@@ -6,6 +6,9 @@
 [ext_resource path="res://Scenes/Cards/BaseCard.tscn" type="PackedScene" id=4]
 
 [node name="LX2" instance=ExtResource( 4 )]
+blue = 33
+grey = 33
+red = 33
 
 [node name="Tile" parent="." index="0" instance=ExtResource( 3 )]
 

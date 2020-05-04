@@ -1,6 +1,8 @@
 extends Node2D
 class_name Card
 
+signal slot_freed
+
 # ---- VARIABLES ----
 
 onready var wall_node = preload("res://Scenes/Wall/Wall.tscn")
@@ -22,10 +24,12 @@ onready var color_chance : Dictionary = {
 	"red" : red
 }
 
-onready var hand_position = get_global_position()
+var color: String = "white"
 
 var card_placed : bool = false
 var tiles_array : Array = []
+
+var tiles_touched : int = 0
 
 var rng = RandomNumberGenerator.new()
 
@@ -57,7 +61,8 @@ func _ready():
 
 	# Place walls and doors
 	place_all_walls()
-	change_color(pick_color())
+	color = pick_color()
+	change_color()
 
 
 # ---- PROCESS ----
@@ -144,26 +149,23 @@ func pick_color():
 		total_chance += chance
 
 	rng.randomize()
-	var color_pick = rng.randi_range(1, total_chance)
-
+	var color_pick = rng.randi_range(1, total_chance - 1)
 	var previous_scores = 0
-
 	for color_key in color_chance:
-
 		if previous_scores < color_pick && color_pick < color_chance.get(color_key) + previous_scores:
-			# color found
-			return color_key
+			return color_key # color found
 		else:
-			# color not found
-			previous_scores += color_chance.get(color_key)
+			previous_scores += color_chance.get(color_key) # color not found
 
 
 # Changes the tiles' color to the one sent in parameters
-func change_color(color):
+func change_color():
 	var color_var = Color(0, 0, 0, 0)
 
 	if color == "blue":
 		color_var = Color(0, 0, 1, 0.2)
+	elif color == "grey":
+		color_var = Color(1, 1, 1, 0.2)
 	elif color == "red":
 		color_var = Color(1, 0, 0, 0.2)
 
@@ -188,17 +190,18 @@ func on_tile_droped():
 	if !card_placed:
 		grab = false
 		offset_with_mouse = Vector2.ZERO
-		global_position += get_the_nearest_tile_translation()
+		var nearst_void_tile = get_the_nearest_tile(tiles_array[0])
+		global_position += get_translation(tiles_array[0], nearst_void_tile)
 	
 		if is_card_on_empty_place():
 			card_placed = true
 			for tile in tiles_array:
 				tile.activate_walls()
-				for area in tile.get_overlapping_areas():
-					if area is VoidTile:
-						area.queue_free()
+				var void_underneath = get_the_nearest_tile(tile)
+				void_underneath.queue_free()
+
 		else:
-			set_global_position(hand_position)
+			set_position(Vector2.ZERO)
 			set_rotation_degrees(0)
 
 
@@ -223,17 +226,57 @@ func is_there_node_of_class(array : Array, class_to_find : String) -> bool:
 	return false
 
 
-# Find the nearest void tile, gets its translation with the card, and returns it
-func get_the_nearest_tile_translation() -> Vector2:
-	var tile0_pos = tiles_array[0].get_global_position()
+# Find the nearest void tile, and returns it
+func get_the_nearest_tile(node : Node) -> VoidTile:
+	var node_pos = node.get_global_position()
 	var void_tiles_array = get_tree().get_nodes_in_group("VoidTiles")
 	var smallest_distance = INF
-	var direction_to := Vector2.ZERO
-
+	var nearest_tile : VoidTile = null
+	
 	for void_tile in void_tiles_array:
-		var current_distance = tile0_pos.distance_to(void_tile.get_global_position())
+		var current_distance = node_pos.distance_to(void_tile.get_global_position())
 		if current_distance < smallest_distance:
 			smallest_distance = current_distance
-			direction_to = tile0_pos.direction_to(void_tile.get_global_position())
+			nearest_tile = void_tile
+	
+	return nearest_tile
 
-	return direction_to * smallest_distance
+
+# Return the translation between two nodes
+func get_translation(node1 : Node, node2 : Node) -> Vector2:
+	var direction_to : Vector2 = node1.global_position.direction_to(node2.get_global_position())
+	var distance_to : float =  node1.global_position.distance_to(node2.get_global_position())
+	return direction_to * distance_to
+
+
+# -- Players detections methods --
+
+# Triggered when a player entered a tile composing the card
+func on_tile_body_entered(body: PhysicsBody2D):
+	if body is Player && card_placed:
+		tiles_touched += 1 
+
+# Triggered when a player live a tile composing the card
+func on_tile_body_exited(body: PhysicsBody2D):
+	if body is Player && card_placed:
+		tiles_touched -= 1
+		if tiles_touched == 0:
+			destroy()
+
+
+# -- Card destruction --
+
+
+# Replace every tile of the card by a void_tile in the grid,
+# Emit a signal to the hand, to signify that a slot has been freed, and tell which one
+# Then queue free the card
+func destroy():
+	for tile in tiles_array:
+		var tile_pos = tile.get_global_position()
+		var grid_node = get_tree().get_current_scene().find_node("Grid")
+		var void_tile = grid_node.void_tile_scene.instance()
+		void_tile.set_global_position(tile_pos)
+		grid_node.call_deferred("add_child", void_tile)
+	
+	emit_signal("slot_freed", get_parent())
+	queue_free()
