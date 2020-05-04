@@ -96,6 +96,10 @@ config/name="Tile Gen"
 run/main_scene="res://Scenes/GUI/Menus/ScreenTitle/ScreenTitle.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SCENES="*res://Global/Autoloads/SCENES.gd"
+
 [display]
 
 window/size/width=200

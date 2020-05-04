@@ -152,7 +152,7 @@ func pick_color():
 	var color_pick = rng.randi_range(1, total_chance - 1)
 	var previous_scores = 0
 	for color_key in color_chance:
-		if previous_scores < color_pick && color_pick < color_chance.get(color_key) + previous_scores:
+		if previous_scores < color_pick && color_pick <= color_chance.get(color_key) + previous_scores:
 			return color_key # color found
 		else:
 			previous_scores += color_chance.get(color_key) # color not found
@@ -256,6 +256,7 @@ func on_tile_body_entered(body: PhysicsBody2D):
 	if body is Player && card_placed:
 		tiles_touched += 1 
 
+
 # Triggered when a player live a tile composing the card
 func on_tile_body_exited(body: PhysicsBody2D):
 	if body is Player && card_placed:
@@ -266,11 +267,13 @@ func on_tile_body_exited(body: PhysicsBody2D):
 
 # -- Card destruction --
 
-
 # Replace every tile of the card by a void_tile in the grid,
 # Emit a signal to the hand, to signify that a slot has been freed, and tell which one
 # Then queue free the card
 func destroy():
+	if SCENES.scene_transitioning:
+		return
+	
 	for tile in tiles_array:
 		var tile_pos = tile.get_global_position()
 		var grid_node = get_tree().get_current_scene().find_node("Grid")

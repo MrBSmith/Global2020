@@ -1,7 +1,5 @@
 extends Node2D
 
-onready var scene_gameover = preload("res://Scenes/GUI/Menus/LoseMenu/GameOver.tscn")
-
 onready var node_gameoverscene : Node
 
 onready var children_array = get_children()
@@ -30,11 +28,6 @@ func on_timer_started():
 
 
 func on_timer_timeout():
-	if(!is_on_gameover_screen):
-		node_gameoverscene = scene_gameover.instance()
-		node_gameoverscene.set_position(Vector2(0,0))
-		add_child(node_gameoverscene)
-		is_on_gameover_screen = true
-	else:
-		node_gameoverscene.queue_free()
-		var _err = get_tree().reload_current_scene()
+	if !is_on_gameover_screen:
+		SCENES.goto_to(SCENES.gameover)
+

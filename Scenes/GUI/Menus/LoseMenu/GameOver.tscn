@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Global/Fonts/BoldCapsPixel.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scenes/GUI/Menus/LoseMenu/GameOver.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/GUI/Menus/LoseMenu/GameOverTimer.gd" type="Script" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -100,13 +99,4 @@ text = " HOLD R TO START A NEW GAME "
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
-}
-
-[node name="Timer" type="Timer" parent="."]
-process_mode = 0
-wait_time = 20.0
-one_shot = true
-script = ExtResource( 3 )
-__meta__ = {
-"_editor_description_": "Timer to allow player to restart after holding R for [WAIT TIME] second"
 }

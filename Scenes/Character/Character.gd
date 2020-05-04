@@ -8,7 +8,6 @@ const slow_speed = 22.0
 export var speed : float = 10
 export var friction : float = 0.08
 export var acceleration : float = 0.08
-export var gayness : int
 
 var velocity := Vector2.ZERO
 var direction := Vector2()
@@ -43,12 +42,6 @@ func move():
 
 func _input(_event):
 	direction = Vector2()
-	if Input.is_action_pressed("fast_speed"):
-		speed = fast_speed
-	if Input.is_action_pressed("medium_speed"):
-		speed = medium_speed
-	if Input.is_action_pressed("slow_speed"):
-		speed = slow_speed
 	
 	if Input.is_action_pressed("ui_right"):
 		direction.x += 1
