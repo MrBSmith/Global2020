@@ -2,6 +2,10 @@ extends Area2D
 class_name Tile
 const CLASS : String = "Tile"
 
+signal tile_grabed
+signal tile_droped
+signal player_exited
+
 var parent
 
 var grab : bool
@@ -29,9 +33,6 @@ func set_color(color: Color):
 
 # ---- READY ----
 
-signal tile_grabed
-signal tile_droped
-
 func _ready():
 	has_parent = false
 	
@@ -46,12 +47,12 @@ func _ready():
 	outside = false
 	
 	var _err = connect("body_entered", self, "on_body_entered")
+	_err = connect("body_exited", self, "on_body_exited")
 	
 	if owner != null:
 		_err = connect("tile_grabed", owner, "on_tile_grabed")
 		_err = connect("tile_droped", owner, "on_tile_droped")
-		_err = connect("body_entered", owner, "on_tile_body_entered")
-		_err = connect("body_exited", owner, "on_tile_body_exited")
+		_err = connect("player_exited", owner, "on_tile_player_exited")
 
 
 # ---- INPUT ----
@@ -105,6 +106,11 @@ func on_body_entered(body: PhysicsBody2D):
 			body.set_speed(body.medium_speed)
 		elif current_color == red:
 			body.set_speed(body.fast_speed)
+
+
+func on_body_exited(body: PhysicsBody2D):
+	if body is Player:
+		emit_signal("player_exited", self)
 
 
 # Set every walls collsision to be active
