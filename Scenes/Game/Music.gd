@@ -18,7 +18,7 @@ func launch_every_stream():
 func set_current_stream(stream):
 	var new_stream : Node
 	if stream is String:
-		 new_stream = get_node_or_null(stream)
+		new_stream = get_node_or_null(stream)
 	elif stream is AudioStreamPlayer:
 		new_stream = stream
 	else: 
@@ -26,9 +26,13 @@ func set_current_stream(stream):
 	
 	if new_stream == null or new_stream == current_stream:
 		return
-
+	
 	previous_stream = current_stream
 	current_stream = new_stream
+	
+	# DEBUG
+#	print("Previous stream : " + previous_stream.name)
+#	print("New Stream : " + new_stream.name)
 	
 	previous_stream.set_fade_out(true)
 	current_stream.set_fade_in(true)
