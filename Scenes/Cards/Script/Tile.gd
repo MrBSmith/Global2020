@@ -70,12 +70,13 @@ func _on_Tile_mouse_exited():
 		overlap = false
 
 
-func _input(_event):
+func _unhandled_input(_event : InputEvent):
 	if overlap:
 		# Drag
 		if Input.is_action_just_pressed("grab"):
 			grab = true
 			emit_signal("tile_grabed")
+			get_tree().set_input_as_handled()
 		
 		# Drop
 		elif Input.is_action_just_released("grab"):
@@ -84,6 +85,7 @@ func _input(_event):
 			# If the mouse is outside the sprite, set the overlap to false
 			if outside:
 				overlap = false
+
 
 
 # Adapt the player speed to the color of the tile

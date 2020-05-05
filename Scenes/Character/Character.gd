@@ -11,7 +11,7 @@ var speed : float = medium_speed setget set_speed
 export var friction : float = 0.08
 export var acceleration : float = 0.08
 
-onready var extents : Vector2 = $CollisionShape2D.get_shape().get_extents()
+onready var radius : float = $CollisionShape2D.get_shape().get_radius()
 
 var velocity := Vector2.ZERO
 var direction := Vector2()
@@ -61,8 +61,8 @@ func move():
 	
 	# Move the physic body
 	velocity = move_and_slide(velocity)
-	global_position.x = clamp(global_position.x, min_pos.x + extents.x, max_pos.x - extents.x)
-	global_position.y = clamp(global_position.y, min_pos.y + extents.y, max_pos.y - extents.y)
+	global_position.x = clamp(global_position.x, min_pos.x + radius, max_pos.x - radius)
+	global_position.y = clamp(global_position.y, min_pos.y + radius, max_pos.y - radius)
 
 # ----- INPUT -----
 
