@@ -24,8 +24,6 @@ onready var color_chance : Dictionary = {
 	"red" : red
 }
 
-var color: String = "white"
-
 var card_placed : bool = false
 var tiles_array : Array = []
 
@@ -61,8 +59,8 @@ func _ready():
 
 	# Place walls and doors
 	place_all_walls()
-	color = pick_color()
-	change_color()
+	var color_name = pick_color()
+	change_tiles_color(color_name)
 
 
 # ---- PROCESS ----
@@ -152,25 +150,17 @@ func pick_color():
 	var color_pick = rng.randi_range(1, total_chance - 1)
 	var previous_scores = 0
 	for color_key in color_chance:
-		if previous_scores < color_pick && color_pick < color_chance.get(color_key) + previous_scores:
+		if previous_scores < color_pick && color_pick <= color_chance.get(color_key) + previous_scores:
 			return color_key # color found
 		else:
 			previous_scores += color_chance.get(color_key) # color not found
 
 
-# Changes the tiles' color to the one sent in parameters
-func change_color():
-	var color_var = Color(0, 0, 0, 0)
-
-	if color == "blue":
-		color_var = Color(0, 0, 1, 0.2)
-	elif color == "grey":
-		color_var = Color(1, 1, 1, 0.2)
-	elif color == "red":
-		color_var = Color(1, 0, 0, 0.2)
-
+# Changes the tiles color to the one sent in parameters
+func change_tiles_color(color_name : String):
 	for tile in tiles_array:
-		tile.get_node("TileColor").color = color_var
+		tile.set_color(tile.get(color_name))
+
 
 # -- drag & drop & rotate functions --
 
@@ -256,6 +246,7 @@ func on_tile_body_entered(body: PhysicsBody2D):
 	if body is Player && card_placed:
 		tiles_touched += 1 
 
+
 # Triggered when a player live a tile composing the card
 func on_tile_body_exited(body: PhysicsBody2D):
 	if body is Player && card_placed:
@@ -266,11 +257,13 @@ func on_tile_body_exited(body: PhysicsBody2D):
 
 # -- Card destruction --
 
-
 # Replace every tile of the card by a void_tile in the grid,
 # Emit a signal to the hand, to signify that a slot has been freed, and tell which one
 # Then queue free the card
 func destroy():
+	if SCENES.scene_transitioning:
+		return
+	
 	for tile in tiles_array:
 		var tile_pos = tile.get_global_position()
 		var grid_node = get_tree().get_current_scene().find_node("Grid")

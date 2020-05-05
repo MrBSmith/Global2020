@@ -9,11 +9,23 @@ var has_parent : bool
 var overlap : bool
 var outside : bool
 
+const blue = Color(0, 0, 1, 0.2)
+const red = Color(1, 0, 0, 0.2)
+const grey = Color(1, 1, 1, 0.2)
+const white = Color(1, 1, 1, 1)
+
+var current_color : Color = white setget set_color
+
 func is_class(value: String) -> bool:
 	return value == CLASS
 
 func get_class() -> String:
 	return CLASS
+
+
+func set_color(color: Color):
+	current_color = color
+	$TileColor.set_frame_color(color)
 
 # ---- READY ----
 
@@ -37,9 +49,10 @@ func _ready():
 		var _err = connect("tile_grabed", owner, "on_tile_grabed")
 		_err = connect("tile_droped", owner, "on_tile_droped")
 		_err = connect("body_entered", owner, "on_tile_body_entered")
+		_err = connect("body_entered", self, "on_body_entered")
 		_err = connect("body_exited", owner, "on_tile_body_exited")
 
-	
+
 # ---- INPUT ----
 
 func _on_Tile_mouse_entered():
@@ -72,15 +85,28 @@ func _input(_event):
 			if outside:
 				overlap = false
 
+
+# Adapt the player speed to the color of the tile
+func on_body_entered(body: PhysicsBody2D):
+	if owner is Card && !owner.card_placed:
+		return
+	
+	if !(owner is Card): # If the tile is a stadalone one
+		if body is Player:
+			body.set_speed(body.medium_speed)
+	
+	if body is Player: # If the tile is from a card
+		if current_color == blue:
+			body.set_speed(body.slow_speed)
+		elif current_color == grey:
+			body.set_speed(body.medium_speed)
+		elif current_color == red:
+			body.set_speed(body.fast_speed)
+
+
 # Set every walls collsision to be active
 func activate_walls():
 	for child in get_children():
 		if child.is_class("Wall"):
 			child.get_node("CollisionShape2D").set_disabled(false)
 
-
-# Destroy every voidtile underneath this tile
-func destroy_walls_underneath():
-	for area in get_overlapping_areas():
-		if area is VoidTile:
-			area.queue_free()
