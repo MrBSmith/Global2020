@@ -45,11 +45,12 @@ func _ready():
 	overlap = false
 	outside = false
 	
+	var _err = connect("body_entered", self, "on_body_entered")
+	
 	if owner != null:
-		var _err = connect("tile_grabed", owner, "on_tile_grabed")
+		_err = connect("tile_grabed", owner, "on_tile_grabed")
 		_err = connect("tile_droped", owner, "on_tile_droped")
 		_err = connect("body_entered", owner, "on_tile_body_entered")
-		_err = connect("body_entered", self, "on_body_entered")
 		_err = connect("body_exited", owner, "on_tile_body_exited")
 
 
