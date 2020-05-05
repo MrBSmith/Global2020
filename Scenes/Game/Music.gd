@@ -1,7 +1,7 @@
 extends Node
 
 onready var streams_node_array = get_children()
-onready var current_stream : Node = get_node("Normal")
+onready var current_stream : Node = get_node("Medium")
 onready var base_stream : Node = get_node("Base")
 var previous_stream : Node = null
 
@@ -15,24 +15,36 @@ func launch_every_stream():
 
 
 # Play the specified stream
-func set_current_stream(node):
+func set_current_stream(stream):
 	var new_stream : Node
-	if node is String:
-		 new_stream = get_node_or_null(node)
-	else:
-		new_stream = node
+	if stream is String:
+		 new_stream = get_node_or_null(stream)
+	elif stream is AudioStreamPlayer:
+		new_stream = stream
+	else: 
+		return
 	
-	if new_stream != null && new_stream != current_stream:
-		previous_stream = current_stream
-		current_stream = new_stream
-		
-		previous_stream.set_fade_out(true)
-		current_stream.set_fade_in(true)
-	else:
-		print("Le stream spécifié n'existe pas.")
+	if new_stream == null or new_stream == current_stream:
+		return
+
+	previous_stream = current_stream
+	current_stream = new_stream
+	
+	previous_stream.set_fade_out(true)
+	current_stream.set_fade_in(true)
 
 
-# DEBUG PURPOSE
+# Returns the current stream
+func get_current_stream() -> Node:
+	return current_stream
+
+
+func on_speed_changed(stream: String):
+	set_current_stream(stream)
+
+
+# -- DEBUG ONLY METHODS --
+
 #func _unhandled_input(event):
 #	if event is InputEventKey:
 #		if event.pressed and event.scancode == KEY_ENTER:
@@ -41,8 +53,3 @@ func set_current_stream(node):
 #			var index = rng.randi_range(1, 3)
 #			print(index)
 #			set_current_stream(streams_node_array[index])
-
-
-# Returns the current stream
-func get_current_stream() -> Node:
-	return current_stream

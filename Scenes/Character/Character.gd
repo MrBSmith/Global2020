@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name Player
 
+signal speed_changed
+
 export var fast_speed : float = 120.0
 export var medium_speed : float = 60.0
 export var slow_speed : float = 30.0
@@ -9,8 +11,13 @@ var speed : float = medium_speed setget set_speed
 export var friction : float = 0.08
 export var acceleration : float = 0.08
 
+onready var extents : Vector2 = $CollisionShape2D.get_shape().get_extents()
+
 var velocity := Vector2.ZERO
 var direction := Vector2()
+
+var min_pos : Vector2
+var max_pos : Vector2
 
 var screen_width : float = ProjectSettings.get("display/window/size/width")
 var screen_height : float =  ProjectSettings.get("display/window/size/height")
@@ -18,11 +25,24 @@ var screen_height : float =  ProjectSettings.get("display/window/size/height")
 
 func set_speed(value: float):
 	speed = value
+	
+	if value == fast_speed:
+		emit_signal("speed_changed", "Fast")
+	elif value == medium_speed:
+		emit_signal("speed_changed", "Medium")
+	elif value == slow_speed:
+		emit_signal("speed_changed", "Slow") 
 
 
 func _ready():
+	set_physics_process(false)
 	self.position.x = screen_width / 2
 	self.position.y = screen_height / 2
+	
+	var _err = connect("speed_changed", owner.get_node("Music"), "on_speed_changed")
+
+func on_ready():
+	set_physics_process(true)
 
 
 # ----- TICK PROCESS -----
@@ -41,7 +61,8 @@ func move():
 	
 	# Move the physic body
 	velocity = move_and_slide(velocity)
-
+	global_position.x = clamp(global_position.x, min_pos.x + extents.x, max_pos.x - extents.x)
+	global_position.y = clamp(global_position.y, min_pos.y + extents.y, max_pos.y - extents.y)
 
 # ----- INPUT -----
 

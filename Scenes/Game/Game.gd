@@ -11,7 +11,7 @@ func _ready():
 	SCENES.scene_transitioning = false
 	
 	# Notify the Void node of the size of the map, so it can generate the right number of void tiles
-	grid_gen_node.grid_size = grid_size
+	grid_gen_node.nb_tiles = grid_size
 	grid_gen_node.on_ready()
 	
 	for child in node_GUI_array:

@@ -88,10 +88,14 @@ func _input(_event):
 
 # Adapt the player speed to the color of the tile
 func on_body_entered(body: PhysicsBody2D):
-	if owner == null or !owner.card_placed:
+	if owner is Card && !owner.card_placed:
 		return
 	
-	if body is Player:
+	if !(owner is Card): # If the tile is a stadalone one
+		if body is Player:
+			body.set_speed(body.medium_speed)
+	
+	if body is Player: # If the tile is from a card
 		if current_color == blue:
 			body.set_speed(body.slow_speed)
 		elif current_color == grey:
