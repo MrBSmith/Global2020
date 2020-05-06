@@ -1,9 +1,3 @@
-extends Node
+extends Area2D
  
-class_name TileBase
-
-func _ready():
-	pass
-
-func tile_effect():
-	pass
+class_name Tile

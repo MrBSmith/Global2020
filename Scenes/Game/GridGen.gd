@@ -1,4 +1,4 @@
-extends TileBase
+extends Node
 
 onready var void_tile_scene = preload("res://Scenes/Tiles/Void/Void.tscn")
 onready var tile_scene = preload("res://Scenes/Tiles/Tile.tscn")

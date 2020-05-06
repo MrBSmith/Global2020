@@ -1,11 +1,9 @@
-extends Area2D
-class_name Tile
-const CLASS : String = "Tile"
+extends Tile
 
-var parent
+class_name WalkableTile
+const CLASS : String = "WalkableTile"
 
 var grab : bool
-var has_parent : bool
 var overlap : bool
 var outside : bool
 
@@ -33,8 +31,6 @@ signal tile_grabed
 signal tile_droped
 
 func _ready():
-	has_parent = false
-	
 	grab = false
 	
 	# why do we need overlap AND outside booleans:
@@ -61,7 +57,7 @@ func _on_Tile_mouse_entered():
 	outside = false
 	# The mouse is overlapping the tile
 	overlap = true
-	
+
 func _on_Tile_mouse_exited():
 	# The mouse is outside the tile
 	outside = true
@@ -91,12 +87,13 @@ func _unhandled_input(_event : InputEvent):
 
 # Adapt the player speed to the color of the tile
 func on_body_entered(body: PhysicsBody2D):
-	if owner is Card && !owner.card_placed:
-		return
-	
 	if !(owner is Card): # If the tile is a stadalone one
 		if body is Player:
 			body.set_speed(body.medium_speed)
+		return
+	
+	if owner.get_state_name() != "Placed":
+		return
 	
 	if body is Player: # If the tile is from a card
 		if current_color == blue:
