@@ -6,6 +6,7 @@ func enter_state():
 	var first_tile = owner.tiles_array[0]
 	
 	var nearest_void_tile = get_the_nearest_tile(first_tile, "VoidTiles")
+	owner.pivot_node.set_global_position(owner.get_global_position())
 	owner.global_position += get_translation(first_tile, nearest_void_tile)
 	
 	if is_card_on_empty_place():
@@ -43,13 +44,6 @@ func is_tile_outside_grid(tile : Tile) -> bool:
 	var inside_y : bool = tile_pos.y < min_pos.y && tile_pos.y >= max_pos.y
 	return inside_x && inside_y
 
-
-# Return true if one or more element of the array is of the given class
-func find_class_in_array(array: Array, class_to_find: String):
-	for element in array:
-		if element.is_class(class_to_find):
-			return true
-	return false
 
 
 # Find the nearest void tile, and returns it

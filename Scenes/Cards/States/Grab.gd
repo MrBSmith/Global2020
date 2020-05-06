@@ -15,10 +15,6 @@ func enter_state():
 	owner.pivot_node.set_global_position(card_original_pos)
 
 
-func exit_state():
-	owner.set_global_position(owner.pivot_node.get_global_position())
-
-
 # Handle rotation
 func _input(_event):
 	if states_node.get_state() == self:
