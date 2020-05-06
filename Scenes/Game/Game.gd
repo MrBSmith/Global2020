@@ -12,10 +12,10 @@ func _ready():
 	
 	# Notify the Void node of the size of the map, so it can generate the right number of void tiles
 	grid_gen_node.nb_tiles = grid_size
-	grid_gen_node.on_ready()
+	grid_gen_node.setup()
 	
 	for child in node_GUI_array:
-		if child.has_method("on_ready"):
-			child.on_ready()
+		if child.has_method("setup"):
+			child.setup()
 
 	music_node.launch_every_stream()

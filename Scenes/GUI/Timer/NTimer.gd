@@ -15,10 +15,10 @@ func _physics_process(_delta):
 			node_Timer.wait_time = 1
 			node_Timer.start_timer()
 
-func on_ready():
+func setup():
 	for child in children_array:
-		if(child.has_method("on_ready")):
-			child.on_ready()
+		if child.has_method("setup"):
+			child.setup()
 	node_Timer.start_timer()
 
 

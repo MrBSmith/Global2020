@@ -1,11 +1,8 @@
-extends Area2D
-class_name Tile
-const CLASS : String = "Tile"
+extends Tile
 
-var parent
+class_name WalkableTile
 
 var grab : bool
-var has_parent : bool
 var overlap : bool
 var outside : bool
 
@@ -15,13 +12,6 @@ const grey = Color(1, 1, 1, 0.2)
 const white = Color(1, 1, 1, 1)
 
 var current_color : Color = white setget set_color
-
-func is_class(value: String) -> bool:
-	return value == CLASS
-
-func get_class() -> String:
-	return CLASS
-
 
 func set_color(color: Color):
 	current_color = color
@@ -33,8 +23,6 @@ signal tile_grabed
 signal tile_droped
 
 func _ready():
-	has_parent = false
-	
 	grab = false
 	
 	# why do we need overlap AND outside booleans:
@@ -45,12 +33,11 @@ func _ready():
 	overlap = false
 	outside = false
 	
+	var _err = connect("body_entered", self, "on_body_entered")
+	
 	if owner != null:
-		var _err = connect("tile_grabed", owner, "on_tile_grabed")
+		_err = connect("tile_grabed", owner, "on_tile_grabed")
 		_err = connect("tile_droped", owner, "on_tile_droped")
-		_err = connect("body_entered", owner, "on_tile_body_entered")
-		_err = connect("body_entered", self, "on_body_entered")
-		_err = connect("body_exited", owner, "on_tile_body_exited")
 
 
 # ---- INPUT ----
@@ -60,7 +47,7 @@ func _on_Tile_mouse_entered():
 	outside = false
 	# The mouse is overlapping the tile
 	overlap = true
-	
+
 func _on_Tile_mouse_exited():
 	# The mouse is outside the tile
 	outside = true
@@ -70,12 +57,13 @@ func _on_Tile_mouse_exited():
 		overlap = false
 
 
-func _input(_event):
+func _unhandled_input(_event : InputEvent):
 	if overlap:
 		# Drag
 		if Input.is_action_just_pressed("grab"):
 			grab = true
 			emit_signal("tile_grabed")
+			get_tree().set_input_as_handled()
 		
 		# Drop
 		elif Input.is_action_just_released("grab"):
@@ -86,14 +74,16 @@ func _input(_event):
 				overlap = false
 
 
+
 # Adapt the player speed to the color of the tile
 func on_body_entered(body: PhysicsBody2D):
-	if owner is Card && !owner.card_placed:
-		return
-	
 	if !(owner is Card): # If the tile is a stadalone one
 		if body is Player:
 			body.set_speed(body.medium_speed)
+		return
+	
+	if owner.get_state_name() != "Placed":
+		return
 	
 	if body is Player: # If the tile is from a card
 		if current_color == blue:

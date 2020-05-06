@@ -27,13 +27,14 @@ extents = Vector2( 3, 3 )
 extents = Vector2( 8, 8 )
 
 [node name="VoidTile" type="Area2D" groups=[
+"Tiles",
 "VoidTiles",
 ]]
 script = ExtResource( 11 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 3
+frame = 5
 playing = true
 __meta__ = {
 "_edit_lock_": true

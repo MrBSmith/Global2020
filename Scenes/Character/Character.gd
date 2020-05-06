@@ -11,13 +11,13 @@ var speed : float = medium_speed setget set_speed
 export var friction : float = 0.08
 export var acceleration : float = 0.08
 
-onready var extents : Vector2 = $CollisionShape2D.get_shape().get_extents()
+onready var radius : float = $CollisionShape2D.get_shape().get_radius()
 
 var velocity := Vector2.ZERO
 var direction := Vector2()
 
-var min_pos : Vector2
-var max_pos : Vector2
+var grid_min_pos : Vector2
+var grid_max_pos : Vector2
 
 var screen_width : float = ProjectSettings.get("display/window/size/width")
 var screen_height : float =  ProjectSettings.get("display/window/size/height")
@@ -41,7 +41,8 @@ func _ready():
 	
 	var _err = connect("speed_changed", owner.get_node("Music"), "on_speed_changed")
 
-func on_ready():
+
+func setup():
 	set_physics_process(true)
 
 
@@ -61,8 +62,8 @@ func move():
 	
 	# Move the physic body
 	velocity = move_and_slide(velocity)
-	global_position.x = clamp(global_position.x, min_pos.x + extents.x, max_pos.x - extents.x)
-	global_position.y = clamp(global_position.y, min_pos.y + extents.y, max_pos.y - extents.y)
+	global_position.x = clamp(global_position.x, grid_min_pos.x + radius, grid_max_pos.x - radius)
+	global_position.y = clamp(global_position.y, grid_min_pos.y + radius, grid_max_pos.y - radius)
 
 # ----- INPUT -----
 

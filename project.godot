@@ -49,13 +49,18 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scenes/SpawnPoints/Script/PointTop.gd"
 }, {
-"base": "Area2D",
-"class": "Tile",
+"base": "Node",
+"class": "StateBase",
 "language": "GDScript",
-"path": "res://Scenes/Cards/Script/Tile.gd"
+"path": "res://BaseClasses/StateBase.gd"
 }, {
 "base": "Node",
-"class": "TileBase",
+"class": "StatesMachine",
+"language": "GDScript",
+"path": "res://BaseClasses/StateMachine.gd"
+}, {
+"base": "Area2D",
+"class": "Tile",
 "language": "GDScript",
 "path": "res://BaseClasses/TileBase.gd"
 }, {
@@ -64,10 +69,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://BaseClasses/TimerBase.gd"
 }, {
-"base": "Area2D",
+"base": "Tile",
 "class": "VoidTile",
 "language": "GDScript",
 "path": "res://Scenes/Tiles/Void/VoidTile.gd"
+}, {
+"base": "Tile",
+"class": "WalkableTile",
+"language": "GDScript",
+"path": "res://Scenes/Cards/Script/Tile.gd"
 }, {
 "base": "StaticBody2D",
 "class": "Wall",
@@ -83,10 +93,12 @@ _global_script_class_icons={
 "Player": "",
 "PointSide": "",
 "PointTop": "",
+"StateBase": "",
+"StatesMachine": "",
 "Tile": "",
-"TileBase": "",
 "TimerBase": "",
 "VoidTile": "",
+"WalkableTile": "",
 "Wall": ""
 }
 
