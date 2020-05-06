@@ -29,6 +29,8 @@ var grid_max_pos : Vector2
 
 var tiles_array : Array = []
 
+var rotation_dest_deg := 0 
+
 # ---- STATE MACHINE ACCESSORS -----
 
 func set_state(value : StateBase):
@@ -46,11 +48,30 @@ func get_state_name() -> String:
 
 func setup():
 	# Get every tiles of the card
-	for child in get_children():
+	for child in pivot_node.get_children():
 		if child is Tile:
 			tiles_array.append(child)
 	
 	states_node.setup()
+
+
+func _physics_process(_delta):
+	if rotation_dest_deg != rotation_degrees:
+		progressive_rotation()
+
+
+# Rotate the card progresively
+func progressive_rotation():
+	var dest_rot = rotation_dest_deg
+	
+	if rotation_dest_deg == 0 && rotation_degrees >= 270:
+		dest_rot = 360
+	
+	var new_rot = wrapf(lerp(rotation_degrees, dest_rot, 0.6), 0.0, 360.0)
+	set_rotation_degrees(new_rot)
+	
+	if abs(dest_rot - rotation_degrees) < 1.0:
+		rotation_degrees = rotation_dest_deg
 
 
 # Triggered by (and connected from) a child tile
