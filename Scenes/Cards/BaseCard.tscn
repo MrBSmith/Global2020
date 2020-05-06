@@ -8,7 +8,7 @@
 [ext_resource path="res://Scenes/Cards/States/Placed.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Cards/States/Generate.gd" type="Script" id=7]
 
-[node name="BaseCard" type="Node2D"]
+[node name="Card" type="Node2D"]
 script = ExtResource( 1 )
 blue = 33
 grey = 33

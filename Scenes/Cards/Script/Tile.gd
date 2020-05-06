@@ -1,7 +1,6 @@
 extends Tile
 
 class_name WalkableTile
-const CLASS : String = "WalkableTile"
 
 var grab : bool
 var overlap : bool
@@ -13,13 +12,6 @@ const grey = Color(1, 1, 1, 0.2)
 const white = Color(1, 1, 1, 1)
 
 var current_color : Color = white setget set_color
-
-func is_class(value: String) -> bool:
-	return value == CLASS
-
-func get_class() -> String:
-	return CLASS
-
 
 func set_color(color: Color):
 	current_color = color
@@ -46,8 +38,6 @@ func _ready():
 	if owner != null:
 		_err = connect("tile_grabed", owner, "on_tile_grabed")
 		_err = connect("tile_droped", owner, "on_tile_droped")
-		_err = connect("body_entered", owner, "on_tile_body_entered")
-		_err = connect("body_exited", owner, "on_tile_body_exited")
 
 
 # ---- INPUT ----

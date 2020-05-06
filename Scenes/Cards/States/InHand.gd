@@ -1,4 +1,3 @@
 extends StateBase
 
-func _ready():
-	pass
+#### HAND STATE ####

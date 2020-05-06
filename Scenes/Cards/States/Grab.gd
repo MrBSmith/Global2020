@@ -1,8 +1,9 @@
 extends StateBase
 
-# ---- INPUT ----
+#### GRABED STATE ####
 
 var offset_with_mouse := Vector2.ZERO
+
 
 func update(_delta : float) -> String:
 	owner.set_global_position(get_viewport().get_mouse_position() - offset_with_mouse)
@@ -18,6 +19,7 @@ func exit_state():
 	offset_with_mouse = Vector2.ZERO
 
 
+# Handle rotation
 func _input(_event):
 	if states_node.get_state() == self:
 		# If the card is grabbed and the clockwise button is pressed

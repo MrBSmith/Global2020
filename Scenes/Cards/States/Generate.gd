@@ -1,5 +1,7 @@
 extends StateBase
 
+#### GENERATE STATE ####
+
 onready var wall_node = preload("res://Scenes/Wall/Wall.tscn")
 onready var door_node = preload("res://Scenes/Wall/Door.tscn")
 
@@ -10,6 +12,9 @@ var tiles_touched : int = 0
 var remaining_doors
 var remaining_walls
 
+
+# Place the walls and door randomly, 
+# Also choose a color randomly, based on the weight of each color set in the card node
 func enter_state():
 	rng.randomize()
 	var door_count = rng.randi_range(owner.min_door, owner.max_door)

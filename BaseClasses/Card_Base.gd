@@ -9,8 +9,8 @@ onready var pivot_node = $Pivot
 onready var states_node = $States
 
 # how many doors the card can have, between the range
-export(int) var min_door : int = 2
-export(int) var max_door : int = 2
+export var min_door : int = 2
+export var max_door : int = 2
 
 # chances to get a color
 # To prevent a color from being chosen, set the color value to 0
@@ -27,7 +27,8 @@ onready var color_chance : Dictionary = {
 var tiles_array : Array = []
 var tiles_touched : int = 0
 
-# -- STATE MACHINE ACCESSORS --
+# ---- STATE MACHINE ACCESSORS -----
+
 func set_state(value : StateBase):
 	states_node.set_state(value)
 
@@ -68,22 +69,6 @@ func on_tile_droped():
 		set_state_by_name("Drop")
 
 
-# -- Players detections methods --
-
-# Triggered when a player entered a tile composing the card
-func on_tile_body_entered(body: PhysicsBody2D):
-	if body is Player && get_state_name() == "Placed":
-		tiles_touched += 1 
-
-
-# Triggered when a player live a tile composing the card
-func on_tile_body_exited(body: PhysicsBody2D):
-	if body is Player && get_state_name() == "Placed":
-		tiles_touched -= 1
-		if tiles_touched <= 0:
-			destroy()
-
-
 # -- Card destruction --
 
 # Replace every tile of the card by a void_tile in the grid,
@@ -94,11 +79,12 @@ func destroy():
 		return
 	
 	for tile in tiles_array:
-		var tile_pos = tile.get_global_position()
-		var grid_node = get_tree().get_current_scene().find_node("Grid")
-		var void_tile = grid_node.void_tile_scene.instance()
-		void_tile.set_global_position(tile_pos)
-		grid_node.call_deferred("add_child", void_tile)
+		if tile.is_inside_tree():
+			var tile_pos = tile.get_global_position()
+			var grid_node = get_tree().get_current_scene().find_node("Grid")
+			var void_tile = grid_node.void_tile_scene.instance()
+			void_tile.set_global_position(tile_pos)
+			grid_node.call_deferred("add_child", void_tile)
 	
 	emit_signal("slot_freed", get_parent())
 	queue_free()
