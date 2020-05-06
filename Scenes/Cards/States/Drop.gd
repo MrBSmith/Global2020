@@ -25,9 +25,31 @@ func enter_state():
 func is_card_on_empty_place() -> bool:
 	for tile in owner.tiles_array:
 		var nearest_tile = get_the_nearest_tile(tile)
-		if !(nearest_tile is VoidTile) or len(tile.get_overlapping_areas()) == 0:
+		# If there is no void tile under the tile
+		if is_tile_outside_grid(tile):
+			return false
+		# If the nearest tile is not a void tile
+		if !(nearest_tile is VoidTile):
 			return false
 	return true
+
+
+# Return true if the given tile is inside the boudries of the grid, false if not
+func is_tile_outside_grid(tile : Tile) -> bool:
+	var tile_pos = tile.get_global_position()
+	var min_pos = owner.grid_min_pos
+	var max_pos = owner.grid_max_pos
+	var inside_x : bool = tile_pos.x < min_pos.x && tile_pos.x >= max_pos.x
+	var inside_y : bool = tile_pos.y < min_pos.y && tile_pos.y >= max_pos.y
+	return inside_x && inside_y
+
+
+# Return true if one or more element of the array is of the given class
+func find_class_in_array(array: Array, class_to_find: String):
+	for element in array:
+		if element.is_class(class_to_find):
+			return true
+	return false
 
 
 # Find the nearest void tile, and returns it

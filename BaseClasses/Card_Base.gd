@@ -5,8 +5,8 @@ signal slot_freed
 
 # ---- VARIABLES ----
 
-onready var pivot_node = $Pivot
-onready var states_node = $States
+onready var pivot_node = get_node("Pivot")
+onready var states_node = get_node("States")
 
 # how many doors the card can have, between the range
 export var min_door : int = 2
@@ -24,8 +24,10 @@ onready var color_chance : Dictionary = {
 	"red" : red
 }
 
+var grid_min_pos : Vector2
+var grid_max_pos : Vector2
+
 var tiles_array : Array = []
-var tiles_touched : int = 0
 
 # ---- STATE MACHINE ACCESSORS -----
 
@@ -41,9 +43,8 @@ func set_state_by_name(value : String):
 func get_state_name() -> String:
 	return states_node.get_state_name()
 
-# ---- ONREADY ----
 
-func _ready():
+func setup():
 	# Get every tiles of the card
 	for child in get_children():
 		if child is Tile:
@@ -51,8 +52,6 @@ func _ready():
 	
 	states_node.setup()
 
-
-# -- drag & drop & rotate functions --
 
 # Triggered by (and connected from) a child tile
 # Compute the offset between the mouse position and the position of the card to move the card accordingly

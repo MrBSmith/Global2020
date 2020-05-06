@@ -7,12 +7,20 @@ var nb_tiles : int
 var void_sprite_size : float
 var grid_position := Vector2.ZERO
 
-func on_ready():
+func setup():
 	create_grid()
-	$Character.min_pos = Vector2(grid_position.x + void_sprite_size / 2, 0)
-	$Character.max_pos.x = grid_position.x + (nb_tiles * void_sprite_size) - void_sprite_size / 2
-	$Character.max_pos.y = grid_position.y + (nb_tiles * void_sprite_size) - void_sprite_size
-	$Character.on_ready()
+	var min_pos = Vector2(grid_position.x + void_sprite_size / 2, 0)
+	var max_pos = Vector2.ZERO
+	max_pos.x = grid_position.x + (nb_tiles * void_sprite_size) - void_sprite_size / 2
+	max_pos.y = grid_position.y + (nb_tiles * void_sprite_size) - void_sprite_size
+	
+	for child in get_children():
+		if "grid_min_pos" in child && "grid_max_pos" in child:
+			child.grid_min_pos = min_pos
+			child.grid_max_pos = max_pos
+		
+		if child.has_method("setup"):
+			child.setup()
 
 
 # Fill the map with void tile, except the 4 corners and the center with normal tiles

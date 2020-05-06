@@ -1,6 +1,9 @@
 extends Node2D
 class_name Hand
 
+var grid_min_pos : Vector2
+var grid_max_pos : Vector2
+
 var cards_array : Array = [
 	preload("res://Scenes/Cards/LineX2.tscn"),
 	preload("res://Scenes/Cards/LineX3.tscn"),
@@ -23,6 +26,11 @@ func generate_card(slot: Position2D):
 	var new_card = cards_array[rng].instance()
 	new_card.connect("slot_freed", self, "on_slot_freed")
 	slot.call_deferred("add_child", new_card)
+	
+	new_card.grid_min_pos = grid_min_pos
+	new_card.grid_max_pos = grid_max_pos
+	
+	new_card.call_deferred("setup")
 
 
 # Tiggered whenever a slot is freed
