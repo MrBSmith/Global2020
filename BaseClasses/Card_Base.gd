@@ -241,23 +241,18 @@ func get_translation(node1 : Node, node2 : Node) -> Vector2:
 
 # -- Players detections methods --
 
+# Triggered when a player entered a tile composing the card
+func on_tile_body_entered(body: PhysicsBody2D):
+	if body is Player && card_placed:
+		tiles_touched += 1 
+
+
 # Triggered when a player live a tile composing the card
-func on_tile_player_exited(tile_emiting : Node):
-	if card_placed:
-		if !is_player_inside_card(tile_emiting):
+func on_tile_body_exited(body: PhysicsBody2D):
+	if body is Player && card_placed:
+		tiles_touched -= 1
+		if tiles_touched == 0:
 			destroy()
-
-
-# Search for a player inside each tile
-# If there is a player in at least one tile of the card, return true
-func is_player_inside_card(tile_exeption : Node = null) -> bool:
-	for tile in tiles_array:
-		if tile != tile_exeption:
-			var bodies_in_tile = tile.get_overlapping_bodies()
-			for body in bodies_in_tile:
-				if body is Player:
-					return true
-	return false
 
 
 # -- Card destruction --
