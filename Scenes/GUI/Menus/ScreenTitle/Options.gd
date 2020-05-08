@@ -1,5 +1,4 @@
 extends MenuOptionsBase
 
 func options_action():
-	#TO DO : Go to option screen
-	pass
+	var _err = get_tree().change_scene_to(SCENES.sound_menu)

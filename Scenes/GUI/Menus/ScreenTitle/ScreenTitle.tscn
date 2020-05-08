@@ -64,6 +64,7 @@ text = "Options"
 align = 1
 valign = 1
 script = ExtResource( 5 )
+_clickable = true
 
 [node name="Quit" type="Label" parent="HBoxContainer/V_OptContainer" index="2"]
 margin_top = 60.0
