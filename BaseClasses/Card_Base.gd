@@ -66,6 +66,8 @@ func progressive_rotation():
 	
 	if rotation_dest_deg == 0 && rotation_degrees >= 270:
 		dest_rot = 360
+	elif rotation_dest_deg == 270 && rotation_degrees == 0:
+		rotation_degrees = 360
 	
 	var new_rot = wrapf(lerp(rotation_degrees, dest_rot, 0.6), 0.0, 360.0)
 	set_rotation_degrees(new_rot)
