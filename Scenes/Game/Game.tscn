@@ -38,16 +38,20 @@ script = ExtResource( 8 )
 
 [node name="Base" parent="Music" instance=ExtResource( 9 )]
 stream = ExtResource( 7 )
+bus = "Music"
 
 [node name="Slow" parent="Music" instance=ExtResource( 9 )]
 stream = ExtResource( 4 )
+bus = "Music"
 
 [node name="Medium" parent="Music" instance=ExtResource( 9 )]
 stream = ExtResource( 6 )
 volume_db = 5.0
+bus = "Music"
 
 [node name="Fast" parent="Music" instance=ExtResource( 9 )]
 stream = ExtResource( 5 )
+bus = "Music"
 
 [node name="GUI" type="Node2D" parent="."]
 z_index = 999
