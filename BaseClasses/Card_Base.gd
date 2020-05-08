@@ -66,6 +66,8 @@ func progressive_rotation():
 	
 	if rotation_dest_deg == 0 && rotation_degrees >= 270:
 		dest_rot = 360
+	elif rotation_dest_deg == 270 && rotation_degrees == 0:
+		rotation_degrees = 360
 	
 	var new_rot = wrapf(lerp(rotation_degrees, dest_rot, 0.6), 0.0, 360.0)
 	set_rotation_degrees(new_rot)
@@ -77,7 +79,12 @@ func progressive_rotation():
 # Triggered by (and connected from) a child tile
 # Compute the offset between the mouse position and the position of the card to move the card accordingly
 func on_tile_grabed():
-	if get_state_name() == "Hand":
+	if get_state_name() == "Hand" or get_state_name() == "Placed":
+		if get_state_name() == "Placed":
+			if is_player_inside_card():
+				return
+			replace_with_void_tiles()
+		
 		set_state_by_name("Grabed")
 
 
@@ -89,6 +96,15 @@ func on_tile_droped():
 		set_state_by_name("Drop")
 
 
+# Check if the player is inside one of the tiles of the card
+func is_player_inside_card():
+	for tile in tiles_array:
+		for body in tile.get_overlapping_bodies():
+			if body is Player:
+				return true
+	return false
+
+
 # -- Card destruction --
 
 # Replace every tile of the card by a void_tile in the grid,
@@ -98,13 +114,19 @@ func destroy():
 	if SCENES.scene_transitioning:
 		return
 	
-	for tile in tiles_array:
-		if tile.is_inside_tree():
-			var tile_pos = tile.get_global_position()
-			var grid_node = get_tree().get_current_scene().find_node("Grid")
-			var void_tile = grid_node.void_tile_scene.instance()
-			void_tile.set_global_position(tile_pos)
-			grid_node.call_deferred("add_child", void_tile)
+	replace_with_void_tiles()
 	
 	emit_signal("slot_freed", get_parent())
 	queue_free()
+
+
+# Place a void tile a the same position as every tiles of this card
+func replace_with_void_tiles():
+	var grid_node = get_tree().get_current_scene().find_node("Grid")
+	
+	for tile in tiles_array:
+		if tile.is_inside_tree():
+			var tile_pos = tile.get_global_position()
+			var void_tile = grid_node.void_tile_scene.instance()
+			void_tile.set_global_position(tile_pos)
+			grid_node.call_deferred("add_child", void_tile)

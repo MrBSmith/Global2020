@@ -17,17 +17,9 @@ func exit_state():
 
 
 func update(_delta) -> String:
-	if player_touched && !is_player_inside_card():
+	if player_touched && !owner.is_player_inside_card():
 		owner.call_deferred("destroy")
 	return ""
-
-
-func is_player_inside_card():
-	for tile in owner.tiles_array:
-		for body in tile.get_overlapping_bodies():
-			if body is Player:
-				return true
-	return false
 
 
 func on_tile_body_entered(body: PhysicsBody2D):
