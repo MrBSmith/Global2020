@@ -11,7 +11,7 @@ func enter_state():
 	
 	if is_card_on_empty_place():
 		for tile in owner.tiles_array:
-			tile.activate_walls()
+			tile.set_enable_walls(true)
 			var void_underneath = get_the_nearest_tile(tile, "VoidTiles")
 			void_underneath.queue_free()
 			states_node.set_state_by_name("Placed")

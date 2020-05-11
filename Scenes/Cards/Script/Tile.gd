@@ -103,8 +103,8 @@ func on_body_entered(body: PhysicsBody2D):
 
 
 # Set every walls collsision to be active
-func activate_walls():
+func set_enable_walls(value: bool):
 	for child in get_children():
 		if child.is_class("Wall"):
-			child.get_node("CollisionShape2D").set_disabled(false)
+			child.get_node("CollisionShape2D").set_disabled(!value)
 

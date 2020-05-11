@@ -13,6 +13,9 @@ func enter_state():
 	var card_original_pos = owner.get_global_position()
 	owner.set_global_position(mouse_pos)
 	owner.pivot_node.set_global_position(card_original_pos)
+	
+	for tile in owner.tiles_array:
+		tile.set_enable_walls(false)
 
 
 # Handle rotation
