@@ -31,6 +31,10 @@ func enter_state():
 	change_tiles_color(color_name)
 	
 	states_node.set_state_by_name("Hand")
+	
+	
+	owner.set_scale(Vector2(0.5, 0.5))
+	owner.scale_dest = Vector2(0.5, 0.5)
 
 
 # -- spawn walls functions --

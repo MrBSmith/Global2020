@@ -30,6 +30,7 @@ var grid_max_pos : Vector2
 var tiles_array : Array = []
 
 var rotation_dest_deg := 0 
+var scale_dest := Vector2.ONE
 
 # ---- STATE MACHINE ACCESSORS -----
 
@@ -58,6 +59,9 @@ func setup():
 func _physics_process(_delta):
 	if rotation_dest_deg != rotation_degrees:
 		progressive_rotation()
+	
+	if scale_dest != scale:
+		progressive_scaling()
 
 
 # Rotate the card progresively
@@ -74,6 +78,11 @@ func progressive_rotation():
 	
 	if abs(dest_rot - rotation_degrees) < 1.0:
 		rotation_degrees = rotation_dest_deg
+
+
+# Scale the card progresively
+func progressive_scaling():
+	scale = scale.linear_interpolate(scale_dest, 0.5)
 
 
 # Triggered by (and connected from) a child tile
