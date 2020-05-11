@@ -7,7 +7,7 @@ onready var original_volume = get_volume_db()
 var fade_in : bool = false
 var fade_out : bool = false
 
-export var fade_speed : float = 10
+export var fade_speed : float = 6
 
 func _process(_delta):
 	if fade_in == true:
@@ -26,7 +26,7 @@ func fading_in():
 
 func fading_out():
 	set_fade_in(false)
-	volume_db -= fade_speed
+	volume_db -= fade_speed * 0.3
 	if get_volume_db() <= -80:
 		set_fade_out(false)
 
