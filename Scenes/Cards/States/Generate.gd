@@ -3,7 +3,6 @@ extends StateBase
 #### GENERATE STATE ####
 
 onready var wall_node = preload("res://Scenes/Wall/Wall.tscn")
-onready var door_node = preload("res://Scenes/Wall/Door.tscn")
 
 var rng = RandomNumberGenerator.new()
 
@@ -73,20 +72,16 @@ func place_all_walls():
 	for tile in owner.tiles_array:
 		for current_node in tile.get_children():
 			if current_node is Position2D:
-				var side
-				# if it's a door
-				if generate_door():
-					side = door_node.instance()
-				else:
-					side = wall_node.instance()
-				
-				# Makes it horizontal if the point is a top one
-				if current_node is PointTop:
-					side.set_rotation_degrees(90)
-				
-				# Add the door/wall to rh 
-				side.set_position(current_node.get_position())
-				tile.add_child(side)
+				if !generate_door(): # if it's a wall
+					var side = wall_node.instance()
+					
+					# Makes it horizontal if the point is a top one
+					if current_node is PointTop:
+						side.set_rotation_degrees(90)
+					
+					# Add the door/wall to rh 
+					side.set_position(current_node.get_position())
+					tile.add_child(side)
 
 
 # Pick a random color depending of the color chance values

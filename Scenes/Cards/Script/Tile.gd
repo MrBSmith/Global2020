@@ -2,7 +2,6 @@ extends Tile
 
 class_name WalkableTile
 
-
 # Why do we need overlap AND outside booleans:
 # When the mouse enter the tile, the overlap will be set to true. When it exit it, it's set to false
 # We need to make sure the boolean stays true if the the card is being dragged because the mouse moves faster than the tile
