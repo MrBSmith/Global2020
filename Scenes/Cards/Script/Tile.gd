@@ -79,7 +79,7 @@ func _unhandled_input(_event : InputEvent):
 func on_body_entered(body: PhysicsBody2D):
 	if !(owner is Card): # If the tile is a stadalone one
 		if body is Player:
-			body.set_speed(body.medium_speed)
+			body.set_speed(body.normal_speed)
 		return
 	
 	if owner.get_state_name() != "Placed":
@@ -87,11 +87,11 @@ func on_body_entered(body: PhysicsBody2D):
 	
 	if body is Player: # If the tile is from a card
 		if current_color == blue:
-			body.set_speed(body.slow_speed)
+			body.set_speed(body.normal_speed / 2)
 		elif current_color == grey:
-			body.set_speed(body.medium_speed)
+			body.set_speed(body.normal_speed)
 		elif current_color == red:
-			body.set_speed(body.fast_speed)
+			body.set_speed(body.normal_speed * 2)
 
 
 # Set every walls collsision to be active
