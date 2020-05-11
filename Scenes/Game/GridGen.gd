@@ -1,7 +1,7 @@
 extends Node
 
-onready var void_tile_scene = preload("res://Scenes/Tiles/Void/Void.tscn")
-onready var tile_scene = preload("res://Scenes/Tiles/Tile.tscn")
+onready var void_tile_scene = preload("res://Scenes/Tiles/VoidTile/Void.tscn")
+onready var tile_scene = preload("res://Scenes/Tiles/NormalTile/Tile.tscn")
 
 var nb_tiles : int
 var void_sprite_size : float
@@ -9,6 +9,7 @@ var grid_position := Vector2.ZERO
 
 func setup():
 	create_grid()
+	
 	var min_pos = Vector2(grid_position.x + void_sprite_size / 2, 0)
 	var max_pos = Vector2.ZERO
 	max_pos.x = grid_position.x + (nb_tiles * void_sprite_size) - void_sprite_size / 2
@@ -21,12 +22,22 @@ func setup():
 		
 		if child.has_method("setup"):
 			child.setup()
+	
+	place_fog(min_pos, max_pos - min_pos)
+
+
+# Place the fog behind the grid, and scale it accordingly
+func place_fog(pos: Vector2, size: Vector2):
+	var fog = $Fog
+	fog.set_global_position(pos)
+	fog.set_region(true)
+	fog.set_region_rect(Rect2(0, 0, size.x, size.y))
 
 
 # Fill the map with void tile, except the 4 corners and the center with normal tiles
 func create_grid():
 	var current_tile = void_tile_scene.instance()
-	var void_sprite = current_tile.get_node("AnimatedSprite").get_sprite_frames().get_frame("default", 0)
+	var void_sprite = current_tile.get_node("Sprite").get_texture()
 	void_sprite_size = void_sprite.get_size().x
 	
 	var screen_width = ProjectSettings.get_setting("display/window/size/width")

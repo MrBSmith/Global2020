@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/NormalMusic.wav-4d917902c77513df051881e732b30d9c.sample"
+
+[deps]
+
+source_file="res://Global/Music/NormalMusic.wav"
+dest_files=[ "res://.import/NormalMusic.wav-4d917902c77513df051881e732b30d9c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

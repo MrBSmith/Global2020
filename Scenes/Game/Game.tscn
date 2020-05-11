@@ -1,22 +1,47 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Scenes/Character/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Character/WrenchRobot/WrenchRobot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Game/GridGen.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Game/Game.gd" type="Script" id=3]
-[ext_resource path="res://Global/Assets/Music/SlowMusic.wav" type="AudioStream" id=4]
-[ext_resource path="res://Global/Assets/Music/FastMusic.wav" type="AudioStream" id=5]
-[ext_resource path="res://Global/Assets/Music/NormalMusic.wav" type="AudioStream" id=6]
-[ext_resource path="res://Global/Assets/Music/BaseMusic.wav" type="AudioStream" id=7]
+[ext_resource path="res://Global/Music/SlowMusic.wav" type="AudioStream" id=4]
+[ext_resource path="res://Global/Music/FastMusic.wav" type="AudioStream" id=5]
+[ext_resource path="res://Global/Music/NormalMusic.wav" type="AudioStream" id=6]
+[ext_resource path="res://Global/Music/BaseMusic.wav" type="AudioStream" id=7]
 [ext_resource path="res://Scenes/Game/Music.gd" type="Script" id=8]
 [ext_resource path="res://Scenes/AudioStream/AudioStreamBase.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/GUI/Timer/Timer.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Fog/FogTexture.tres" type="Texture" id=11]
 [ext_resource path="res://Scenes/Hand/Hand.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Fog/Fog.shader" type="Shader" id=13]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 13 )
+shader_param/fog_color = Color( 0.827451, 0, 1, 1 )
+shader_param/distort_speed = Vector2( -0.03, 0.03 )
+shader_param/opacity = 1.318
+shader_param/OCTAVES = 4
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="BackGround" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Overlay" type="ColorRect" parent="BackGround"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="NTimer" parent="GUI" instance=ExtResource( 10 )]
 
 [node name="Grid" type="Node2D" parent="."]
 z_index = -5
@@ -27,11 +52,13 @@ position = Vector2( 180, 0 )
 z_index = 1
 z_as_relative = false
 
-[node name="Character" parent="Grid" instance=ExtResource( 1 )]
-z_index = 2
-z_as_relative = false
-friction = 0.25
-acceleration = 0.25
+[node name="WrenchRobot" parent="Grid" instance=ExtResource( 1 )]
+normal_speed = 60.0
+
+[node name="Fog" type="Sprite" parent="Grid"]
+material = SubResource( 1 )
+texture = ExtResource( 11 )
+centered = false
 
 [node name="Music" type="Node" parent="."]
 script = ExtResource( 8 )
@@ -52,11 +79,3 @@ bus = "Music"
 [node name="Fast" parent="Music" instance=ExtResource( 9 )]
 stream = ExtResource( 5 )
 bus = "Music"
-
-[node name="GUI" type="Node2D" parent="."]
-z_index = 999
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="NTimer" parent="GUI" instance=ExtResource( 10 )]

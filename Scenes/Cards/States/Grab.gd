@@ -13,11 +13,14 @@ func enter_state():
 	var card_original_pos = owner.get_global_position()
 	owner.set_global_position(mouse_pos)
 	owner.pivot_node.set_global_position(card_original_pos)
+	
+	for tile in owner.tiles_array:
+		tile.set_enable_walls(false)
 
 
 # Handle rotation
-func _input(_event):
-	if states_node.get_state() == self:
+func _input(event):
+	if states_node.get_state() == self && event.is_pressed():
 		if Input.is_action_just_pressed("rotate_card_clock") or Input.is_action_just_pressed("rotate_card_anti_clock"):
 			var current_rot = owner.rotation_dest_deg
 			# If the card is grabbed and the clockwise button is pressed

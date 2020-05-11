@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Character/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Character/WrenchRobot/WrenchRobot.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Character/WrenchRobot/Sprites/Eyes.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Character/WrenchRobot/Sprites/Wrenches.png" type="Texture" id=5]
+
+[node name="WrenchRobot" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="WrenchesSprite" type="Sprite" parent="." index="0"]
+texture = ExtResource( 5 )
+
+[node name="EyesSprite" type="Sprite" parent="." index="2"]
+scale = Vector2( 1.00764, 0.988992 )
+texture = ExtResource( 4 )

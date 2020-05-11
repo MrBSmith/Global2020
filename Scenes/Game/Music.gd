@@ -15,14 +15,8 @@ func launch_every_stream():
 
 
 # Play the specified stream
-func set_current_stream(stream):
-	var new_stream : Node
-	if stream is String:
-		new_stream = get_node_or_null(stream)
-	elif stream is AudioStreamPlayer:
-		new_stream = stream
-	else: 
-		return
+func set_current_stream(stream: String):
+	var new_stream : Node = get_node_or_null(stream)
 	
 	if new_stream == null or new_stream == current_stream:
 		return
@@ -34,8 +28,8 @@ func set_current_stream(stream):
 #	print("Previous stream : " + previous_stream.name)
 #	print("New Stream : " + new_stream.name)
 	
-	previous_stream.set_fade_out(true)
-	current_stream.set_fade_in(true)
+	previous_stream.set_fade_out()
+	current_stream.set_fade_in()
 
 
 # Returns the current stream
