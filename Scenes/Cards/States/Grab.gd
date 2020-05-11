@@ -19,8 +19,8 @@ func enter_state():
 
 
 # Handle rotation
-func _input(_event):
-	if states_node.get_state() == self:
+func _input(event):
+	if states_node.get_state() == self && event.is_pressed():
 		if Input.is_action_just_pressed("rotate_card_clock") or Input.is_action_just_pressed("rotate_card_anti_clock"):
 			var current_rot = owner.rotation_dest_deg
 			# If the card is grabbed and the clockwise button is pressed

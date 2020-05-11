@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/BaseMusic.wav-f6d0777a696823641912229fc3f8951c.sample"
+path="res://.import/BaseMusic.wav-780b97d4740abeb0858f756014347096.sample"
 
 [deps]
 
-source_file="res://Global/Assets/Music/BaseMusic.wav"
-dest_files=[ "res://.import/BaseMusic.wav-f6d0777a696823641912229fc3f8951c.sample" ]
+source_file="res://Global/Music/BaseMusic.wav"
+dest_files=[ "res://.import/BaseMusic.wav-780b97d4740abeb0858f756014347096.sample" ]
 
 [params]
 

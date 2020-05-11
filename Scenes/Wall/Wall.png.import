@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TileSol.png-65c9dd7b33728909d7fcd3c8ccd27e63.stex"
+path="res://.import/Wall.png-d50f644759ebc7a19388859ad8235924.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Global/Assets/Graphics/TileSol.png"
-dest_files=[ "res://.import/TileSol.png-65c9dd7b33728909d7fcd3c8ccd27e63.stex" ]
+source_file="res://Scenes/Wall/Wall.png"
+dest_files=[ "res://.import/Wall.png-d50f644759ebc7a19388859ad8235924.stex" ]
 
 [params]
 

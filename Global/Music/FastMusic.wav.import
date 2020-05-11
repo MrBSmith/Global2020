@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/SlowMusic.wav-a8865b65b58c19ee25bccd3ceaa2f255.sample"
+path="res://.import/FastMusic.wav-576cd8a2b54558c459eebc2ce366e4a1.sample"
 
 [deps]
 
-source_file="res://Global/Assets/Music/SlowMusic.wav"
-dest_files=[ "res://.import/SlowMusic.wav-a8865b65b58c19ee25bccd3ceaa2f255.sample" ]
+source_file="res://Global/Music/FastMusic.wav"
+dest_files=[ "res://.import/FastMusic.wav-576cd8a2b54558c459eebc2ce366e4a1.sample" ]
 
 [params]
 
