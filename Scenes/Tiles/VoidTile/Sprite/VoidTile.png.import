@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TileVoid1.png-52e1fc0665e70a8302d85e0bdf40f9dc.stex"
+path="res://.import/VoidTile.png-dea285ca60fec6e76e2d12708eacb764.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Tiles/VoidTile/Animation/TileVoid1.png"
-dest_files=[ "res://.import/TileVoid1.png-52e1fc0665e70a8302d85e0bdf40f9dc.stex" ]
+source_file="res://Scenes/Tiles/VoidTile/Sprite/VoidTile.png"
+dest_files=[ "res://.import/VoidTile.png-dea285ca60fec6e76e2d12708eacb764.stex" ]
 
 [params]
 
@@ -24,11 +24,11 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0
