@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/TileVoid2.png-0f8560ec1d149aa6282aa135e8bd881f.stex"
+path="res://.import/TileVoid7.png-80b9a441a86b4ce31e1d336c97935a46.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Tiles/Void/Animation/TileVoid2.png"
-dest_files=[ "res://.import/TileVoid2.png-0f8560ec1d149aa6282aa135e8bd881f.stex" ]
+source_file="res://Scenes/Tiles/VoidTile/Animation/TileVoid7.png"
+dest_files=[ "res://.import/TileVoid7.png-80b9a441a86b4ce31e1d336c97935a46.stex" ]
 
 [params]
 

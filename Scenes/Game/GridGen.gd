@@ -1,7 +1,7 @@
 extends Node
 
-onready var void_tile_scene = preload("res://Scenes/Tiles/Void/Void.tscn")
-onready var tile_scene = preload("res://Scenes/Tiles/Tile.tscn")
+onready var void_tile_scene = preload("res://Scenes/Tiles/VoidTile/Void.tscn")
+onready var tile_scene = preload("res://Scenes/Tiles/NormalTile/Tile.tscn")
 
 var nb_tiles : int
 var void_sprite_size : float

@@ -72,7 +72,7 @@ _global_script_classes=[ {
 "base": "Tile",
 "class": "VoidTile",
 "language": "GDScript",
-"path": "res://Scenes/Tiles/Void/VoidTile.gd"
+"path": "res://Scenes/Tiles/VoidTile/VoidTile.gd"
 }, {
 "base": "Tile",
 "class": "WalkableTile",
