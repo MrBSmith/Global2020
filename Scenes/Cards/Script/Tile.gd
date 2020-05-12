@@ -107,4 +107,5 @@ func set_enable_walls(value: bool):
 	for child in get_children():
 		if child.is_class("Wall"):
 			child.get_node("CollisionShape2D").set_disabled(!value)
+			child.get_node("LightOccluder2D").set_occluder_light_mask(int(value))
 
