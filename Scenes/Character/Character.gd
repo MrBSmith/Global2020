@@ -17,9 +17,6 @@ var direction := Vector2.ZERO setget set_direction, get_direction
 var grid_min_pos : Vector2
 var grid_max_pos : Vector2
 
-var screen_width : float = ProjectSettings.get("display/window/size/width")
-var screen_height : float =  ProjectSettings.get("display/window/size/height")
-
 var is_moving : bool = false
 
 func set_speed(value: float):
@@ -42,6 +39,9 @@ func get_direction() -> Vector2:
 
 func _ready():
 	set_physics_process(false)
+	var screen_width : float = ProjectSettings.get("display/window/size/width")
+	var screen_height : float =  ProjectSettings.get("display/window/size/height")
+	
 	self.position.x = screen_width / 2
 	self.position.y = screen_height / 2
 	
