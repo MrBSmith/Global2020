@@ -3,6 +3,8 @@ extends Node
 onready var void_tile_scene = preload("res://Scenes/Tiles/VoidTile/Void.tscn")
 onready var tile_scene = preload("res://Scenes/Tiles/NormalTile/Tile.tscn")
 
+onready var collactables_array = $Collectables.get_children()
+
 var nb_tiles : int
 var void_sprite_size : float
 var grid_position := Vector2.ZERO
@@ -46,19 +48,29 @@ func create_grid():
 	
 	current_tile.queue_free()
 	
+	
+	var corner_counter : int = 0
 	# Create every tiles in the grid
 	for i in range(1, nb_tiles):
 		for j in range(1, nb_tiles):
 			# Determine if the node should be a normal tile or a void tile
-			if is_tile_the_center(i, j) || is_tile_a_corner(i, j):
+			var is_center : bool = is_tile_the_center(i, j)
+			var is_corner : bool = is_tile_a_corner(i, j)
+			if is_center || is_corner:
 				current_tile = tile_scene.instance()
+				if is_corner:
+					collactables_array[corner_counter].set_position(compute_grid_position(i, j))
+					corner_counter += 1
 			else:
 				current_tile = void_tile_scene.instance()
 			
 			# Create the tile, and set its position
-			var current_tile_pos = Vector2(grid_position.x + (i * void_sprite_size), j * void_sprite_size - void_sprite_size / 2)
-			current_tile.set_position(current_tile_pos)
+			current_tile.set_position(compute_grid_position(i, j))
 			add_child(current_tile)
+
+
+func compute_grid_position(i: int, j: int):
+	return Vector2(grid_position.x + (i * void_sprite_size), j * void_sprite_size - void_sprite_size / 2)
 
 
 # Return true if the given tile coordinates corresponds to the center of the grid

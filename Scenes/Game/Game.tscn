@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scenes/Character/WrenchRobot/WrenchRobot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Game/GridGen.gd" type="Script" id=2]
@@ -15,6 +15,10 @@
 [ext_resource path="res://Scenes/Fog/Fog.shader" type="Shader" id=13]
 [ext_resource path="res://Scenes/Generator/Generator.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/Generator/Generator.gd" type="Script" id=15]
+[ext_resource path="res://Scenes/Collactables/Scenes/GreenCollactable.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scenes/Collactables/Scenes/BlueCollactable.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Scenes/Collactables/Scenes/RedCollactable.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scenes/Collactables/Scenes/YellowCollactable.tscn" type="PackedScene" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 13 )
@@ -65,6 +69,20 @@ normal_speed = 60.0
 [node name="Generator" parent="Grid" instance=ExtResource( 14 )]
 z_index = 1
 script = ExtResource( 15 )
+
+[node name="Collectables" type="Node2D" parent="Grid"]
+
+[node name="GreenCollactable" parent="Grid/Collectables" instance=ExtResource( 16 )]
+z_index = 0
+
+[node name="RedCollactable" parent="Grid/Collectables" instance=ExtResource( 18 )]
+z_index = 0
+
+[node name="YellowCollactable" parent="Grid/Collectables" instance=ExtResource( 19 )]
+z_index = 0
+
+[node name="BlueCollactable" parent="Grid/Collectables" instance=ExtResource( 17 )]
+z_index = 0
 
 [node name="Music" type="Node" parent="."]
 script = ExtResource( 8 )

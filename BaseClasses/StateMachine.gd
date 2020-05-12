@@ -13,9 +13,13 @@ onready var states_map = get_children()
 onready var current_state : StateBase
 onready var previous_state : StateBase
 
+
+func _ready():
+	set_physics_process(false)
+
 func setup():
-	set_physics_process(true)
 	set_state(states_map[0])
+	set_physics_process(true)
 
 
 # Call for the current state process
