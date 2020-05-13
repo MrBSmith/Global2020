@@ -1,6 +1,9 @@
 extends KinematicBody2D
 class_name Player
 
+onready var pivot_node = $Pivot
+onready var collactable_slot = $Pivot/CollactableSlot
+
 signal speed_changed
 
 export var normal_speed : float = 60.0

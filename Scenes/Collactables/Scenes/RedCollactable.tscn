@@ -1,11 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Collactables/Scenes/Collactable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Collactables/Sprite/RedGem.png" type="Texture" id=2]
+[ext_resource path="res://Global/Shaders/Outline.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/width = 1.0
+shader_param/color = null
 
 [node name="RedCollactable" instance=ExtResource( 1 )]
+color = "Red"
 
 [node name="Sprite" parent="." index="1"]
+material = SubResource( 1 )
 texture = ExtResource( 2 )
 
 [node name="Light2D" parent="Sprite" index="0"]
