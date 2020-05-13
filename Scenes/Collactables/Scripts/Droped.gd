@@ -13,3 +13,4 @@ func enter_state():
 	
 	# Reset the offset to zero
 	sprite_node.set_offset(Vector2.ZERO)
+	sprite_node.set_z_index(1)

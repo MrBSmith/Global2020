@@ -15,7 +15,7 @@ shader_param/width = 1.0
 shader_param/color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 5.0
+radius = 3.0
 
 [sub_resource type="Animation" id=3]
 length = 4.0

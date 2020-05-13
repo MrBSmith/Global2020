@@ -11,9 +11,9 @@ var grab : bool = false
 var overlap : bool = false
 var outside : bool = false
 
-const blue = Color(0, 0, 1, 0.2)
-const red = Color(1, 0, 0, 0.2)
-const grey = Color(1, 1, 1, 0.2)
+const blue = Color(0, 0, 1, 0.4)
+const red = Color(1, 0, 0, 0.4)
+const grey = Color(1, 1, 1, 0.4)
 const white = Color(1, 1, 1, 1)
 
 var current_color : Color = white setget set_color
