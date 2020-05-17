@@ -29,7 +29,7 @@ var grid_max_pos : Vector2
 
 var tiles_array : Array = []
 
-var rotation_dest_deg := 0 
+var rotation_dest_deg : float = 0.0
 var scale_dest := Vector2.ONE
 
 # ---- STATE MACHINE ACCESSORS -----
