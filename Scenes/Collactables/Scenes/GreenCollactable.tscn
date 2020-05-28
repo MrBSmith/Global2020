@@ -19,6 +19,3 @@ texture = ExtResource( 2 )
 [node name="Light2D" parent="Sprite" index="0"]
 color = Color( 0.14902, 1, 0, 1 )
 energy = 1.2
-
-[node name="CollisionShape2D" parent="." index="2"]
-visible = false

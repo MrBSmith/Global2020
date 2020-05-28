@@ -23,3 +23,4 @@ func on_body_entered(body : PhysicsBody2D):
 			set_position(Vector2.ZERO)
 			body.collactable_slot.call_deferred("add_child", self)
 			states_node.set_state_by_name("Grabed")
+			$GrabbedFX.play()

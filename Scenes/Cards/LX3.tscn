@@ -5,10 +5,12 @@
 [ext_resource path="res://Scenes/Tiles/NormalTile/Tile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Cards/BaseCard.tscn" type="PackedScene" id=4]
 
-
 [node name="LX3" instance=ExtResource( 4 )]
 min_door = 3
 max_door = 4
+blue = 10
+grey = 50
+red = 40
 
 [node name="Tile" parent="Pivot" index="0" instance=ExtResource( 3 )]
 

@@ -13,6 +13,10 @@ func launch_every_stream():
 		if stream != current_stream && stream != base_stream:
 			stream.mute()
 
+# Stops every streams
+func stop_every_stream():
+	for stream in streams_node_array:
+		stream.stop()
 
 # Play the specified stream
 func set_current_stream(stream: String):

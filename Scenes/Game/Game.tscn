@@ -101,3 +101,4 @@ bus = "Music"
 [node name="Fast" parent="Music" instance=ExtResource( 9 )]
 stream = ExtResource( 5 )
 bus = "Music"
+[connection signal="repaired" from="Grid/Generator" to="." method="_on_Generator_repaired"]

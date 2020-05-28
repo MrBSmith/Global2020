@@ -5,8 +5,10 @@
 [ext_resource path="res://Scenes/Tiles/NormalTile/Tile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Cards/BaseCard.tscn" type="PackedScene" id=6]
 
-
 [node name="LineX2" instance=ExtResource( 6 )]
+blue = 70
+grey = 50
+red = 10
 
 [node name="Tile" parent="Pivot" index="0" instance=ExtResource( 3 )]
 

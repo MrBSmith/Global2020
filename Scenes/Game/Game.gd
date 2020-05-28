@@ -19,3 +19,19 @@ func _ready():
 			child.setup()
 
 	music_node.launch_every_stream()
+
+# The game is won
+func _on_Generator_repaired():
+	music_node.stop_every_stream()
+	
+	node_GUI.get_node("NTimer/Timer").set_paused(true)
+	
+	if grid_gen_node.has_node("Fog"):
+		grid_gen_node.get_node("Fog").set_visible(false)
+	
+	grid_gen_node.get_node("Hand").disable()
+	
+	
+	
+	
+	pass # Replace with function body.

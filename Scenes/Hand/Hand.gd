@@ -37,3 +37,9 @@ func generate_card(slot: Position2D):
 # Generate a new card
 func on_slot_freed(slot: Position2D):
 	generate_card(slot)
+	
+func disable():
+	visible = false
+	for child in get_children():
+		if child is Card:
+			child.destroy()

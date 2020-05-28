@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Global/Lights/Light300.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Collactables/Scripts/Collactable.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Collactables/Scripts/Droped.gd" type="Script" id=6]
 [ext_resource path="res://Scenes/Collactables/Sprite/Shadow.png" type="Texture" id=7]
 [ext_resource path="res://Global/Shaders/Outline.shader" type="Shader" id=8]
+[ext_resource path="res://Global/Sounds/Wrench_Grab.wav" type="AudioStream" id=9]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 8 )
@@ -15,7 +16,7 @@ shader_param/width = 1.0
 shader_param/color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 3.0
+radius = 3.09241
 
 [sub_resource type="Animation" id=3]
 length = 4.0
@@ -77,3 +78,8 @@ script = ExtResource( 5 )
 
 [node name="Droped" type="Node" parent="States"]
 script = ExtResource( 6 )
+
+[node name="GrabbedFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = 5.049
+pitch_scale = 1.15
