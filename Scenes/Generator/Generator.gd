@@ -43,4 +43,8 @@ func check_status():
 
 
 func _on_Repaired_finished():
+	$Win_Timer.start()
+
+
+func _on_Win_Timer_timeout():
 	SCENES.goto_to(SCENES.you_won)

@@ -37,4 +37,9 @@ volume_db = 5.049
 
 [node name="Repaired" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="Win_Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
 [connection signal="finished" from="Repaired" to="." method="_on_Repaired_finished"]
+[connection signal="timeout" from="Win_Timer" to="." method="_on_Win_Timer_timeout"]
